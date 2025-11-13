@@ -7,7 +7,7 @@ url = "https://valencia.opendatasoft.com/api/explore/v2.1/catalog/datasets/valen
 
 # Calculate end time (7 days from start)
 start_time = time.time()
-end_time = start_time + 1 * 24 * 60 * 60  # 7 days in seconds
+end_time = start_time + 7 * 24 * 60 * 60  # 7 days in seconds
 
 while time.time() < end_time:
     now = datetime.datetime.now()
@@ -25,5 +25,6 @@ while time.time() < end_time:
     except Exception as e:
         print(f"Failed to get data: {e}")
 
-    # Sleep for an hour (3600 seconds)
-    time.sleep(3600)
+    # Sleep for an 10 minutes (600 seconds)
+    time.sleep(600)
+
