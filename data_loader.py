@@ -3,7 +3,7 @@ import time
 import datetime
 
 # URL to query
-url = "https://valencia.opendatasoft.com/api/explore/v2.1/catalog/datasets/valenbisi-disponibilitat-valenbisi-dsiponibilidad/records?select=number%2C%20available%2C%20free%2C%20total%2C%20geo_point_2d%2Cupdated_at&where=update_jcd%3A%20%5B%272025%2F11%2F12%27%20TO%20%272025%2F12%2F13%27%5D&order_by=number&limit=-1"
+url = "https://valencia.opendatasoft.com/api/explore/v2.1/catalog/datasets/valenbisi-disponibilitat-valenbisi-dsiponibilidad/records?select=number%2C%20available%2C%20free%2C%20total%2Cupdated_at&where=update_jcd%3A%20%5B%272025%2F11%2F12%27%20TO%20%272025%2F12%2F13%27%5D&order_by=number&limit=-1"
 
 # Calculate end time (7 days from start)
 start_time = time.time()
@@ -27,4 +27,5 @@ while time.time() < end_time:
 
     # Sleep for an 10 minutes (600 seconds)
     time.sleep(600)
+
 
