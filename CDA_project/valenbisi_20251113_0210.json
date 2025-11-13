@@ -1,0 +1,1205 @@
+{
+  "total_count": 271,
+  "results": [
+    {
+      "address": "C/GUILLEM DE CASTRO esquina con C/NA JORDANA",
+      "number": 1,
+      "available": 2,
+      "free": 23,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.38292927973315827,
+        "lat": 39.48004223020643
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Salvador Giner - C. Museo",
+      "number": 2,
+      "available": 0,
+      "free": 15,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.3797483936090024,
+        "lat": 39.479889353348874
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza del Musico López Chavarri",
+      "number": 3,
+      "available": 10,
+      "free": 9,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3802883976424855,
+        "lat": 39.4768353435743
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza de la Virgen - Bailía",
+      "number": 4,
+      "available": 1,
+      "free": 22,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.37534238089458904,
+        "lat": 39.476747340831494
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza Poeta Llorente",
+      "number": 5,
+      "available": 3,
+      "free": 11,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.3711403661399108,
+        "lat": 39.476895339123786
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Guillem de Castro - San Pedro Pascual",
+      "number": 6,
+      "available": 6,
+      "free": 9,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.38408341393871137,
+        "lat": 39.472798331478145
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza del Mercado - Taula de Canvis",
+      "number": 7,
+      "available": 3,
+      "free": 15,
+      "total": 19,
+      "geo_point_2d": {
+        "lon": -0.3791853952972924,
+        "lat": 39.47487233593648
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza de la Reina - Mar",
+      "number": 8,
+      "available": 0,
+      "free": 9,
+      "total": 9,
+      "geo_point_2d": {
+        "lon": -0.3752982847143531,
+        "lat": 39.473881223660634
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza de Tetuán",
+      "number": 9,
+      "available": 0,
+      "free": 25,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.3699303648826442,
+        "lat": 39.47435533016869
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Hospital - Horno del Hospital",
+      "number": 10,
+      "available": 1,
+      "free": 14,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.38261041097634013,
+        "lat": 39.470816323984536
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza Ayuntamiento - Cotanda",
+      "number": 11,
+      "available": 1,
+      "free": 26,
+      "total": 27,
+      "geo_point_2d": {
+        "lon": -0.3767843903416451,
+        "lat": 39.47118632283677
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Calle Salvá - Calle Poeta Querol",
+      "number": 12,
+      "available": 0,
+      "free": 20,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3740102862977963,
+        "lat": 39.47196722343732
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Alfonso el Magnánimo - Nave",
+      "number": 13,
+      "available": 0,
+      "free": 24,
+      "total": 24,
+      "geo_point_2d": {
+        "lon": -0.37087436964085335,
+        "lat": 39.4720623227334
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Huesca - Barón de Cárcer",
+      "number": 14,
+      "available": 1,
+      "free": 18,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.37972440222295445,
+        "lat": 39.46896731649349
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Ribera - Plaza Ayuntamiento",
+      "number": 15,
+      "available": 0,
+      "free": 34,
+      "total": 34,
+      "geo_point_2d": {
+        "lon": -0.3756373880434071,
+        "lat": 39.46908831533384
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Colón, 60",
+      "number": 16,
+      "available": 0,
+      "free": 20,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3704333693720587,
+        "lat": 39.470092316192336
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Xátiva - Bailén (Estación del Norte)",
+      "number": 17,
+      "available": 0,
+      "free": 29,
+      "total": 30,
+      "geo_point_2d": {
+        "lon": -0.3772593951806123,
+        "lat": 39.46746831099193
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Colón 20-22",
+      "number": 18,
+      "available": 0,
+      "free": 24,
+      "total": 24,
+      "geo_point_2d": {
+        "lon": -0.37312937987373457,
+        "lat": 39.468191311513856
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Juan Llorens - Quart",
+      "number": 19,
+      "available": 13,
+      "free": 2,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.391590438798602,
+        "lat": 39.47436934054566
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Quart - Fernando el Católico",
+      "number": 20,
+      "available": 0,
+      "free": 16,
+      "total": 16,
+      "geo_point_2d": {
+        "lon": -0.3878474253260651,
+        "lat": 39.47503434099054
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Juan Llorens - Literato Gabriel Miró",
+      "number": 21,
+      "available": 13,
+      "free": 2,
+      "total": 16,
+      "geo_point_2d": {
+        "lon": -0.39021443540491124,
+        "lat": 39.4723713328859
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Angel Guimerá - Juan Llorens",
+      "number": 22,
+      "available": 14,
+      "free": 1,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.3883534313205414,
+        "lat": 39.46978732404922
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Fernando el Católico - Erudito Orellana",
+      "number": 23,
+      "available": 4,
+      "free": 15,
+      "total": 19,
+      "geo_point_2d": {
+        "lon": -0.3861784216967592,
+        "lat": 39.471628328748515
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Fernando el Católico - Cuenca",
+      "number": 24,
+      "available": 3,
+      "free": 16,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3840274173384119,
+        "lat": 39.469077319212495
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Alberique, 18 (Abastos)",
+      "number": 25,
+      "available": 9,
+      "free": 14,
+      "total": 23,
+      "geo_point_2d": {
+        "lon": -0.38861043334080225,
+        "lat": 39.46772931656263
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "San José de Calasanz - Salas Quiroga",
+      "number": 26,
+      "available": 5,
+      "free": 10,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.38586429939117395,
+        "lat": 39.46633523268935
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "San Vicente Martir - Doctor Vilá Barberá",
+      "number": 27,
+      "available": 6,
+      "free": 13,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3818514137102655,
+        "lat": 39.463362299305594
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Navarro Reverter - Grabador Esteve",
+      "number": 28,
+      "available": 1,
+      "free": 27,
+      "total": 29,
+      "geo_point_2d": {
+        "lon": -0.36775135880068294,
+        "lat": 39.47158231958138
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza América - Cirilo Amorós - Sorní",
+      "number": 29,
+      "available": 0,
+      "free": 20,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3652993525279599,
+        "lat": 39.47011231364647
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Cirilo Amorós - Jorge Juan (Mercado Colón)",
+      "number": 30,
+      "available": 0,
+      "free": 20,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.36849936365579583,
+        "lat": 39.468601309884924
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Salamanca - Conde Altea",
+      "number": 31,
+      "available": 0,
+      "free": 18,
+      "total": 19,
+      "geo_point_2d": {
+        "lon": -0.3650283531086902,
+        "lat": 39.467365304622646
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Conde Altea - Almirante Cadarso",
+      "number": 32,
+      "available": 0,
+      "free": 20,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3682473649948816,
+        "lat": 39.46600630156446
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Germanías - Ruzafa",
+      "number": 33,
+      "available": 1,
+      "free": 19,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.37399038562310283,
+        "lat": 39.46481830023885
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Regne de Valencia - Doctor Sumsi",
+      "number": 34,
+      "available": 9,
+      "free": 8,
+      "total": 17,
+      "geo_point_2d": {
+        "lon": -0.36996137299092113,
+        "lat": 39.46412229654908
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Regne de Valencia - Almirante Cadarso",
+      "number": 35,
+      "available": 3,
+      "free": 7,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.36699436340059455,
+        "lat": 39.46374929341137
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza de los Fueros - Conde Trenor",
+      "number": 36,
+      "available": 0,
+      "free": 25,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.3754363798581042,
+        "lat": 39.479072348860946
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Peris y Valero - Luis Santángel",
+      "number": 37,
+      "available": 16,
+      "free": 4,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3664406250017559,
+        "lat": 39.460937800028375
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Peris y Valero - Cabo Jubi",
+      "number": 38,
+      "available": 15,
+      "free": 0,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.37024937736936264,
+        "lat": 39.45940204927687
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Peris y Valero - Cuba",
+      "number": 39,
+      "available": 18,
+      "free": 0,
+      "total": 19,
+      "geo_point_2d": {
+        "lon": -0.3739313916673185,
+        "lat": 39.457854277261184
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Barcas, 11",
+      "number": 40,
+      "available": 0,
+      "free": 25,
+      "total": 26,
+      "geo_point_2d": {
+        "lon": -0.3748243837183276,
+        "lat": 39.470466319701956
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "General Urrutia - Granada",
+      "number": 41,
+      "available": 19,
+      "free": 1,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.36477635908979195,
+        "lat": 39.458912276426375
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Av. de la Plata (Museo Fallero)",
+      "number": 42,
+      "available": 0,
+      "free": 18,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3586583378805894,
+        "lat": 39.45878127329601
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Escultor José Capuz - Oriente",
+      "number": 43,
+      "available": 19,
+      "free": 1,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.36115334583643566,
+        "lat": 39.459477276259406
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "General Urrutia - Av. de la Plata",
+      "number": 44,
+      "available": 17,
+      "free": 0,
+      "total": 19,
+      "geo_point_2d": {
+        "lon": -0.36301435452576164,
+        "lat": 39.45642926768604
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Hermanos Maristas - General Urrutia",
+      "number": 45,
+      "available": 12,
+      "free": 3,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.36185535292343096,
+        "lat": 39.45381925759081
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Pintor Luis Arcas - Inst. Obrero Valenciano",
+      "number": 46,
+      "available": 13,
+      "free": 7,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.35878734087160885,
+        "lat": 39.455509261762266
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Autopista del Saler - Puente Monteolivete",
+      "number": 47,
+      "available": 2,
+      "free": 17,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.35541832880362817,
+        "lat": 39.45651226440267
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Antonio Ferrandis - General Urrutia",
+      "number": 48,
+      "available": 3,
+      "free": 16,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.35855273823228967,
+        "lat": 39.450807354184086
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Ricardo Muñoz Suay - María José Victoria Fuster (C.C. El Saler)",
+      "number": 49,
+      "available": 7,
+      "free": 18,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.3571104198826364,
+        "lat": 39.45298693239739
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Autopista del Saler - Antonio Ferrandis (C.C. El Saler)",
+      "number": 50,
+      "available": 4,
+      "free": 35,
+      "total": 40,
+      "geo_point_2d": {
+        "lon": -0.3528593228128155,
+        "lat": 39.453318252515686
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Moreras (Oceanográfico)",
+      "number": 51,
+      "available": 12,
+      "free": 8,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3472273049060467,
+        "lat": 39.45218324552497
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Luis García Berlanga Martí - Menorca",
+      "number": 52,
+      "available": 0,
+      "free": 25,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.3463402980947426,
+        "lat": 39.45603425797373
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Alameda - Pintor Maella",
+      "number": 53,
+      "available": 6,
+      "free": 19,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.34813930400480075,
+        "lat": 39.45676426141678
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza de Europa",
+      "number": 54,
+      "available": 9,
+      "free": 11,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3526903171951741,
+        "lat": 39.459778273617445
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Francia - Pintor Maella",
+      "number": 55,
+      "available": 23,
+      "free": 1,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.34868630411595647,
+        "lat": 39.45934326975421
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Francia - Menorca",
+      "number": 56,
+      "available": 12,
+      "free": 1,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.3444052893928658,
+        "lat": 39.45842126509135
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Alameda - Pintor Monleón",
+      "number": 57,
+      "available": 19,
+      "free": 1,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3582563324315247,
+        "lat": 39.46447629179199
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza España",
+      "number": 58,
+      "available": 1,
+      "free": 19,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3815864106638383,
+        "lat": 39.46621830848607
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Baleares - Río Escalona",
+      "number": 59,
+      "available": 13,
+      "free": 0,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.3545493213542055,
+        "lat": 39.463088285667624
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Baleares - Lebón",
+      "number": 60,
+      "available": 17,
+      "free": 1,
+      "total": 19,
+      "geo_point_2d": {
+        "lon": -0.3517763125261459,
+        "lat": 39.46223128102797
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Vicent Vidal - Pintor Maella",
+      "number": 61,
+      "available": 20,
+      "free": 0,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.34783029886743094,
+        "lat": 39.46129327599964
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Menorca - Baleares",
+      "number": 62,
+      "available": 20,
+      "free": 0,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3421522812931475,
+        "lat": 39.45981126842254
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Av Puerto 19 (Telefónica)",
+      "number": 63,
+      "available": 12,
+      "free": 7,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.358414330727018,
+        "lat": 39.46777930285978
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Av. Puerto 61-63",
+      "number": 64,
+      "available": 19,
+      "free": 1,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.35419531724959286,
+        "lat": 39.46651829706714
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Av. Puerto - Doctor Manuel Candela",
+      "number": 65,
+      "available": 19,
+      "free": 0,
+      "total": 19,
+      "geo_point_2d": {
+        "lon": -0.3508373061951808,
+        "lat": 39.465516292011046
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Guillem de Anglesola - Av. Puerto",
+      "number": 66,
+      "available": 22,
+      "free": 3,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.3462612916525901,
+        "lat": 39.46427128532339
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Juan Verdeguer - Toneleros",
+      "number": 67,
+      "available": 13,
+      "free": 0,
+      "total": 14,
+      "geo_point_2d": {
+        "lon": -0.33679826304022287,
+        "lat": 39.45886026320377
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Av. Puerto - José Aguilar",
+      "number": 68,
+      "available": 20,
+      "free": 0,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3417332778594022,
+        "lat": 39.46280327868023
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Av. Puerto - Serrería",
+      "number": 69,
+      "available": 25,
+      "free": 0,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.3387212679875118,
+        "lat": 39.46195227384504
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Colón, 44",
+      "number": 70,
+      "available": 0,
+      "free": 17,
+      "total": 17,
+      "geo_point_2d": {
+        "lon": -0.3716462894107889,
+        "lat": 39.469213221319464
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Av. Puerto - Plaza Tribunal de les Aigües",
+      "number": 71,
+      "available": 20,
+      "free": 0,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.33353125122308164,
+        "lat": 39.46038026686525
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Ramiro de Maeztu - Peris Brell",
+      "number": 72,
+      "available": 13,
+      "free": 1,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.34644628196214244,
+        "lat": 39.467257201162404
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Jerónimo Monsoriu - Industria",
+      "number": 73,
+      "available": 18,
+      "free": 2,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3428792786496773,
+        "lat": 39.4662592905475
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Plaza San Felipe Neri (Mercado Algirós)",
+      "number": 74,
+      "available": 18,
+      "free": 2,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.3537343124957471,
+        "lat": 39.469949307546806
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "República Argentina - Campoamor",
+      "number": 75,
+      "available": 22,
+      "free": 3,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.35170130420295115,
+        "lat": 39.472113313853896
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Campoamor - Músico Ginés",
+      "number": 76,
+      "available": 18,
+      "free": 0,
+      "total": 19,
+      "geo_point_2d": {
+        "lon": -0.343461277578989,
+        "lat": 39.47008330347364
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Molinell - Calderón de la Barca",
+      "number": 77,
+      "available": 10,
+      "free": 10,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.36566734195835493,
+        "lat": 39.48497336307338
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Aragón - Vicente Sancho Tello",
+      "number": 78,
+      "available": 14,
+      "free": 6,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.358688329939162,
+        "lat": 39.46994531050937
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Aragón - Ernesto Ferrer",
+      "number": 79,
+      "available": 14,
+      "free": 6,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.357242322435451,
+        "lat": 39.4727793187067
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Amadeo de Saboya (frente Ayuntamiento)",
+      "number": 80,
+      "available": 0,
+      "free": 25,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.36229833944736023,
+        "lat": 39.47374232444908
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Micer Mascó - Rodriguez Fornos",
+      "number": 81,
+      "available": 2,
+      "free": 17,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.36097833354659675,
+        "lat": 39.47512832851177
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Guillem de Castro (Torres de Quart)",
+      "number": 82,
+      "available": 0,
+      "free": 13,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.3839144104057024,
+        "lat": 39.47605634238628
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "General Elio - Llano del Real",
+      "number": 83,
+      "available": 1,
+      "free": 24,
+      "total": 25,
+      "geo_point_2d": {
+        "lon": -0.3669703519914759,
+        "lat": 39.47758533929587
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Serrería, 67",
+      "number": 84,
+      "available": 14,
+      "free": 0,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.33522597686590844,
+        "lat": 39.467123092394516
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez - Jaime Roig",
+      "number": 85,
+      "available": 1,
+      "free": 21,
+      "total": 23,
+      "geo_point_2d": {
+        "lon": -0.3647153422684407,
+        "lat": 39.479464345022826
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Gaspar Aguilar - Vicente Parra",
+      "number": 86,
+      "available": 7,
+      "free": 13,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.39119345191575566,
+        "lat": 39.4552402764855
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez - Doctor Gómez Ferrer (Clínico)",
+      "number": 87,
+      "available": 0,
+      "free": 28,
+      "total": 33,
+      "geo_point_2d": {
+        "lon": -0.36188033357859983,
+        "lat": 39.47851834019109
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez, 28 (F. Geografía e Historia)",
+      "number": 88,
+      "available": 1,
+      "free": 39,
+      "total": 40,
+      "geo_point_2d": {
+        "lon": -0.36114233248377353,
+        "lat": 39.477512336096844
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez, 23 (F. Filosofía y Psicología)",
+      "number": 89,
+      "available": 1,
+      "free": 29,
+      "total": 30,
+      "geo_point_2d": {
+        "lon": -0.3593183259089267,
+        "lat": 39.47780233689744
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez, 32 (F. Filología)",
+      "number": 90,
+      "available": 2,
+      "free": 34,
+      "total": 40,
+      "geo_point_2d": {
+        "lon": -0.3589673254467337,
+        "lat": 39.47673433298103
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Grabador Jordan - Escultor Pastor",
+      "number": 91,
+      "available": 12,
+      "free": 3,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.36757337969703135,
+        "lat": 39.44412522887422
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez - Aragón",
+      "number": 92,
+      "available": 4,
+      "free": 16,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.35596831583559707,
+        "lat": 39.47586032883543
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez - Poeta Durán Tortajada",
+      "number": 93,
+      "available": 25,
+      "free": 12,
+      "total": 38,
+      "geo_point_2d": {
+        "lon": -0.34380927742382206,
+        "lat": 39.472282310670764
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez - Clariano",
+      "number": 94,
+      "available": 1,
+      "free": 19,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.35158330144926053,
+        "lat": 39.47537832465668
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Naranjos (Magisterio)",
+      "number": 95,
+      "available": 2,
+      "free": 31,
+      "total": 33,
+      "geo_point_2d": {
+        "lon": -0.34611927939668474,
+        "lat": 39.47983533734356
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez - Yecla",
+      "number": 96,
+      "available": 1,
+      "free": 20,
+      "total": 21,
+      "geo_point_2d": {
+        "lon": -0.3482142912637639,
+        "lat": 39.47355431688417
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez 121",
+      "number": 97,
+      "available": 9,
+      "free": 14,
+      "total": 23,
+      "geo_point_2d": {
+        "lon": -0.3431322739648798,
+        "lat": 39.47306831276613
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Justo y Pastor - Duque de Gaeta",
+      "number": 98,
+      "available": 14,
+      "free": 0,
+      "total": 15,
+      "geo_point_2d": {
+        "lon": -0.348442294427372,
+        "lat": 39.469680303996114
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez 166 - Pintor José Mongrell",
+      "number": 99,
+      "available": 19,
+      "free": 1,
+      "total": 21,
+      "geo_point_2d": {
+        "lon": -0.3404842660990001,
+        "lat": 39.47134430635022
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    },
+    {
+      "address": "Blasco Ibañez - Mestre Ripoll",
+      "number": 100,
+      "available": 20,
+      "free": 0,
+      "total": 20,
+      "geo_point_2d": {
+        "lon": -0.33815025853445674,
+        "lat": 39.471634305646866
+      },
+      "updated_at": "13/11/2025 03:09:19"
+    }
+  ]
+}
