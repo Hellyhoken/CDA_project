@@ -16,6 +16,13 @@ while time.time() < end_time:
         response = requests.get(url)
         response.raise_for_status()
         data = response.json()
+        if data['total_count'] > len(data['results']):
+            for offset in range(100, data['total_count'], 100):
+                paged_url = url + f"&offset={offset}"
+                paged_response = requests.get(paged_url)
+                paged_response.raise_for_status()
+                paged_data = paged_response.json()
+                data['results'].extend(paged_data['results'])
         # Save to a file with timestamp
         filename = now.strftime("valenbisi_%Y%m%d_%H%M.json")
         with open(filename, "w", encoding="utf-8") as f:
