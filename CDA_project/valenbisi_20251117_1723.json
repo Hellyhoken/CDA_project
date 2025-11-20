@@ -1,0 +1,705 @@
+{
+  "total_count": 271,
+  "results": [
+    {
+      "number": 1,
+      "available": 3,
+      "free": 21,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 2,
+      "available": 2,
+      "free": 12,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 3,
+      "available": 1,
+      "free": 19,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 4,
+      "available": 0,
+      "free": 24,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 5,
+      "available": 0,
+      "free": 15,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 6,
+      "available": 4,
+      "free": 11,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 7,
+      "available": 1,
+      "free": 17,
+      "total": 19,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 8,
+      "available": 0,
+      "free": 9,
+      "total": 9,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 9,
+      "available": 5,
+      "free": 19,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 10,
+      "available": 2,
+      "free": 13,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 11,
+      "available": 1,
+      "free": 26,
+      "total": 27,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 12,
+      "available": 3,
+      "free": 17,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 13,
+      "available": 2,
+      "free": 22,
+      "total": 24,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 14,
+      "available": 5,
+      "free": 15,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 15,
+      "available": 2,
+      "free": 32,
+      "total": 34,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 16,
+      "available": 10,
+      "free": 9,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 17,
+      "available": 27,
+      "free": 3,
+      "total": 30,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 18,
+      "available": 6,
+      "free": 18,
+      "total": 24,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 19,
+      "available": 11,
+      "free": 2,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 20,
+      "available": 2,
+      "free": 14,
+      "total": 16,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 21,
+      "available": 5,
+      "free": 11,
+      "total": 16,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 22,
+      "available": 9,
+      "free": 6,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 23,
+      "available": 6,
+      "free": 12,
+      "total": 19,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 24,
+      "available": 8,
+      "free": 11,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 25,
+      "available": 5,
+      "free": 18,
+      "total": 23,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 26,
+      "available": 6,
+      "free": 9,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 27,
+      "available": 4,
+      "free": 16,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 28,
+      "available": 24,
+      "free": 5,
+      "total": 29,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 29,
+      "available": 15,
+      "free": 5,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 30,
+      "available": 1,
+      "free": 19,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 31,
+      "available": 9,
+      "free": 8,
+      "total": 19,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 32,
+      "available": 2,
+      "free": 18,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 33,
+      "available": 12,
+      "free": 8,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 34,
+      "available": 12,
+      "free": 5,
+      "total": 17,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 35,
+      "available": 9,
+      "free": 1,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 36,
+      "available": 3,
+      "free": 21,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 37,
+      "available": 16,
+      "free": 4,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 38,
+      "available": 14,
+      "free": 1,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 39,
+      "available": 18,
+      "free": 1,
+      "total": 19,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 40,
+      "available": 5,
+      "free": 21,
+      "total": 26,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 41,
+      "available": 0,
+      "free": 20,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 42,
+      "available": 16,
+      "free": 4,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 43,
+      "available": 12,
+      "free": 8,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 44,
+      "available": 15,
+      "free": 3,
+      "total": 19,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 45,
+      "available": 14,
+      "free": 1,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 46,
+      "available": 18,
+      "free": 2,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 47,
+      "available": 11,
+      "free": 8,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 48,
+      "available": 15,
+      "free": 5,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 49,
+      "available": 10,
+      "free": 15,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 50,
+      "available": 3,
+      "free": 37,
+      "total": 40,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 51,
+      "available": 10,
+      "free": 10,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 52,
+      "available": 13,
+      "free": 12,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 53,
+      "available": 8,
+      "free": 17,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 54,
+      "available": 18,
+      "free": 2,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 55,
+      "available": 21,
+      "free": 4,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 56,
+      "available": 5,
+      "free": 10,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 57,
+      "available": 17,
+      "free": 3,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 58,
+      "available": 5,
+      "free": 15,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 59,
+      "available": 14,
+      "free": 0,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 60,
+      "available": 12,
+      "free": 7,
+      "total": 19,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 61,
+      "available": 14,
+      "free": 6,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 62,
+      "available": 17,
+      "free": 3,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 63,
+      "available": 19,
+      "free": 1,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 64,
+      "available": 17,
+      "free": 3,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 65,
+      "available": 18,
+      "free": 1,
+      "total": 19,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 66,
+      "available": 22,
+      "free": 3,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 67,
+      "available": 14,
+      "free": 0,
+      "total": 14,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 68,
+      "available": 20,
+      "free": 0,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 69,
+      "available": 24,
+      "free": 0,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 70,
+      "available": 6,
+      "free": 10,
+      "total": 17,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 71,
+      "available": 19,
+      "free": 1,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 72,
+      "available": 10,
+      "free": 3,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 73,
+      "available": 12,
+      "free": 8,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 74,
+      "available": 5,
+      "free": 14,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 75,
+      "available": 5,
+      "free": 20,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 76,
+      "available": 16,
+      "free": 3,
+      "total": 19,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 77,
+      "available": 3,
+      "free": 17,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 78,
+      "available": 16,
+      "free": 4,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 79,
+      "available": 13,
+      "free": 7,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 80,
+      "available": 15,
+      "free": 10,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 81,
+      "available": 7,
+      "free": 13,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 82,
+      "available": 9,
+      "free": 5,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 83,
+      "available": 8,
+      "free": 17,
+      "total": 25,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 84,
+      "available": 15,
+      "free": 0,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 85,
+      "available": 0,
+      "free": 23,
+      "total": 23,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 86,
+      "available": 3,
+      "free": 12,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 87,
+      "available": 1,
+      "free": 27,
+      "total": 33,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 88,
+      "available": 17,
+      "free": 23,
+      "total": 40,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 89,
+      "available": 8,
+      "free": 22,
+      "total": 30,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 90,
+      "available": 11,
+      "free": 29,
+      "total": 40,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 91,
+      "available": 14,
+      "free": 1,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 92,
+      "available": 7,
+      "free": 13,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 93,
+      "available": 18,
+      "free": 18,
+      "total": 38,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 94,
+      "available": 20,
+      "free": 0,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 95,
+      "available": 19,
+      "free": 13,
+      "total": 33,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 96,
+      "available": 20,
+      "free": 0,
+      "total": 21,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 97,
+      "available": 10,
+      "free": 13,
+      "total": 23,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 98,
+      "available": 7,
+      "free": 8,
+      "total": 15,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 99,
+      "available": 9,
+      "free": 12,
+      "total": 21,
+      "updated_at": "17/11/2025 18:19:39"
+    },
+    {
+      "number": 100,
+      "available": 17,
+      "free": 3,
+      "total": 20,
+      "updated_at": "17/11/2025 18:19:39"
+    }
+  ]
+}
