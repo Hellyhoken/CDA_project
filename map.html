@@ -1,0 +1,3108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_87116a1fc202a576a2b9619cdc9ea24c {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <style>
+        #side-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background-color: white;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+            transition: right 0.3s ease;
+            z-index: 9999;
+            overflow-y: auto;
+            font-family: Arial, sans-serif;
+        }
+        #side-panel.open {
+            right: 0;
+        }
+        #panel-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 10000;
+        }
+        #close-btn {
+            float: right;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            margin: -5px 0;
+        }
+        #panel-content {
+            padding: 20px;
+        }
+        .info-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .info-section:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .info-value {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .prediction-placeholder {
+            background-color: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 5px;
+            padding: 30px;
+            text-align: center;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+        
+        /* Pin Control Panel */
+        #pin-control {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 9998;
+            font-family: Arial, sans-serif;
+            min-width: 200px;
+        }
+        #pin-control h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 16px;
+        }
+        .pin-btn {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .pin-btn.active {
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.5);
+        }
+        #start-pin-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        #start-pin-btn:hover {
+            background-color: #218838;
+        }
+        #end-pin-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        #end-pin-btn:hover {
+            background-color: #c82333;
+        }
+        #clear-pins-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        #clear-pins-btn:hover {
+            background-color: #5a6268;
+        }
+        #plan-route-btn {
+            background-color: #007bff;
+            color: white;
+            margin-top: 10px;
+        }
+        #plan-route-btn:hover {
+            background-color: #0056b3;
+        }
+        #plan-route-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .pin-status {
+            font-size: 12px;
+            color: #666;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <div id="pin-control">
+        <h4>📍 Place Pins</h4>
+        <button id="start-pin-btn" class="pin-btn" onclick="togglePinMode('start')">
+            Place Start Pin
+        </button>
+        <div class="pin-status" id="start-status">Click to activate</div>
+        
+        <button id="end-pin-btn" class="pin-btn" onclick="togglePinMode('end')">
+            Place End Pin
+        </button>
+        <div class="pin-status" id="end-status">Click to activate</div>
+        
+        <button id="clear-pins-btn" class="pin-btn" onclick="clearAllPins()">
+            Clear All Pins
+        </button>
+        
+        <button id="plan-route-btn" class="pin-btn" onclick="goToRoutePlanner()" disabled>
+            🚴 Plan Route
+        </button>
+    </div>
+    
+    <div id="side-panel">
+        <div id="panel-header">
+            <button id="close-btn" onclick="closePanel()">&times;</button>
+            <h3 id="panel-title" style="margin: 0;">Station Information</h3>
+        </div>
+        <div id="panel-content">
+            <div class="info-section">
+                <div class="info-label">Station Number:</div>
+                <div class="info-value" id="station-number">-</div>
+                
+                <div class="info-label">Address:</div>
+                <div class="info-value" id="station-address">-</div>
+                
+                <div class="info-label">Coordinates:</div>
+                <div class="info-value" id="station-coords">-</div>
+            </div>
+            
+            <div class="info-section">
+                <div class="info-label">Bike Availability Predictions:</div>
+                <div class="prediction-placeholder">
+                    <p><strong>Predictions Coming Soon</strong></p>
+                    <p style="font-size: 14px; margin-top: 10px;">
+                        Future predictions for bike availability will be displayed here.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var allStations = [{"address": "C/GUILLEM DE CASTRO esquina con C/NA JORDANA", "number": 1, "lon": -0.3829292797331582, "lat": 39.48004223020643}, {"address": "Salvador Giner - C. Museo", "number": 2, "lon": -0.3797483936090024, "lat": 39.47988935334888}, {"address": "Plaza del Musico L\u00f3pez Chavarri", "number": 3, "lon": -0.3802883976424855, "lat": 39.4768353435743}, {"address": "Plaza de la Virgen - Bail\u00eda", "number": 4, "lon": -0.375342380894589, "lat": 39.47674734083149}, {"address": "Plaza Poeta Llorente", "number": 5, "lon": -0.3711403661399108, "lat": 39.476895339123786}, {"address": "Guillem de Castro - San Pedro Pascual", "number": 6, "lon": -0.3840834139387113, "lat": 39.47279833147815}, {"address": "Plaza del Mercado - Taula de Canvis", "number": 7, "lon": -0.3791853952972924, "lat": 39.47487233593648}, {"address": "Plaza de la Reina - Mar", "number": 8, "lon": -0.3752982847143531, "lat": 39.47388122366064}, {"address": "Plaza de Tetu\u00e1n", "number": 9, "lon": -0.3699303648826442, "lat": 39.47435533016869}, {"address": "Hospital - Horno del Hospital", "number": 10, "lon": -0.3826104109763401, "lat": 39.470816323984536}, {"address": "Plaza Ayuntamiento - Cotanda", "number": 11, "lon": -0.3767843903416451, "lat": 39.47118632283677}, {"address": "Calle Salv\u00e1 - Calle Poeta Querol", "number": 12, "lon": -0.3740102862977963, "lat": 39.47196722343732}, {"address": "Alfonso el Magn\u00e1nimo - Nave", "number": 13, "lon": -0.3708743696408533, "lat": 39.4720623227334}, {"address": "Huesca - Bar\u00f3n de C\u00e1rcer", "number": 14, "lon": -0.3797244022229544, "lat": 39.46896731649349}, {"address": "Ribera - Plaza Ayuntamiento", "number": 15, "lon": -0.3756373880434071, "lat": 39.46908831533384}, {"address": "Col\u00f3n, 60", "number": 16, "lon": -0.3704333693720587, "lat": 39.470092316192336}, {"address": "X\u00e1tiva - Bail\u00e9n (Estaci\u00f3n del Norte)", "number": 17, "lon": -0.3772593951806123, "lat": 39.46746831099193}, {"address": "Col\u00f3n 20-22", "number": 18, "lon": -0.3731293798737345, "lat": 39.468191311513856}, {"address": "Juan Llorens - Quart", "number": 19, "lon": -0.391590438798602, "lat": 39.47436934054566}, {"address": "Quart - Fernando el Cat\u00f3lico", "number": 20, "lon": -0.3878474253260651, "lat": 39.47503434099054}, {"address": "Juan Llorens - Literato Gabriel Mir\u00f3", "number": 21, "lon": -0.3902144354049112, "lat": 39.4723713328859}, {"address": "Angel Guimer\u00e1 - Juan Llorens", "number": 22, "lon": -0.3883534313205414, "lat": 39.46978732404922}, {"address": "Fernando el Cat\u00f3lico - Erudito Orellana", "number": 23, "lon": -0.3861784216967592, "lat": 39.47162832874852}, {"address": "Fernando el Cat\u00f3lico - Cuenca", "number": 24, "lon": -0.3840274173384119, "lat": 39.469077319212495}, {"address": "Alberique, 18 (Abastos)", "number": 25, "lon": -0.3886104333408022, "lat": 39.46772931656263}, {"address": "San Jos\u00e9 de Calasanz - Salas Quiroga", "number": 26, "lon": -0.3858642993911739, "lat": 39.46633523268935}, {"address": "San Vicente Martir - Doctor Vil\u00e1 Barber\u00e1", "number": 27, "lon": -0.3818514137102655, "lat": 39.4633622993056}, {"address": "Navarro Reverter - Grabador Esteve", "number": 28, "lon": -0.3677513588006829, "lat": 39.47158231958138}, {"address": "Plaza Am\u00e9rica - Cirilo Amor\u00f3s - Sorn\u00ed", "number": 29, "lon": -0.3652993525279599, "lat": 39.47011231364647}, {"address": "Cirilo Amor\u00f3s - Jorge Juan (Mercado Col\u00f3n)", "number": 30, "lon": -0.3684993636557958, "lat": 39.46860130988493}, {"address": "Salamanca - Conde Altea", "number": 31, "lon": -0.3650283531086902, "lat": 39.467365304622646}, {"address": "Conde Altea - Almirante Cadarso", "number": 32, "lon": -0.3682473649948816, "lat": 39.46600630156446}, {"address": "German\u00edas - Ruzafa", "number": 33, "lon": -0.3739903856231028, "lat": 39.46481830023885}, {"address": "Regne de Valencia - Doctor Sumsi", "number": 34, "lon": -0.3699613729909211, "lat": 39.46412229654908}, {"address": "Regne de Valencia - Almirante Cadarso", "number": 35, "lon": -0.3669943634005945, "lat": 39.46374929341137}, {"address": "Plaza de los Fueros - Conde Trenor", "number": 36, "lon": -0.3754363798581042, "lat": 39.47907234886095}, {"address": "Peris y Valero - Luis Sant\u00e1ngel", "number": 37, "lon": -0.3664406250017559, "lat": 39.460937800028375}, {"address": "Peris y Valero - Cabo Jubi", "number": 38, "lon": -0.3702493773693626, "lat": 39.45940204927687}, {"address": "Peris y Valero - Cuba", "number": 39, "lon": -0.3739313916673185, "lat": 39.457854277261184}, {"address": "Barcas, 11", "number": 40, "lon": -0.3748243837183276, "lat": 39.47046631970196}, {"address": "General Urrutia - Granada", "number": 41, "lon": -0.3647763590897919, "lat": 39.458912276426375}, {"address": "Av. de la Plata (Museo Fallero)", "number": 42, "lon": -0.3586583378805894, "lat": 39.45878127329601}, {"address": "Escultor Jos\u00e9 Capuz - Oriente", "number": 43, "lon": -0.3611533458364356, "lat": 39.459477276259406}, {"address": "General Urrutia - Av. de la Plata", "number": 44, "lon": -0.3630143545257616, "lat": 39.45642926768604}, {"address": "Hermanos Maristas - General Urrutia", "number": 45, "lon": -0.3618553529234309, "lat": 39.45381925759081}, {"address": "Pintor Luis Arcas - Inst. Obrero Valenciano", "number": 46, "lon": -0.3587873408716088, "lat": 39.455509261762266}, {"address": "Autopista del Saler - Puente Monteolivete", "number": 47, "lon": -0.3554183288036281, "lat": 39.45651226440267}, {"address": "Antonio Ferrandis - General Urrutia", "number": 48, "lon": -0.3585527382322896, "lat": 39.450807354184086}, {"address": "Ricardo Mu\u00f1oz Suay - Mar\u00eda Jos\u00e9 Victoria Fuster (C.C. El Saler)", "number": 49, "lon": -0.3571104198826364, "lat": 39.45298693239739}, {"address": "Autopista del Saler - Antonio Ferrandis (C.C. El Saler)", "number": 50, "lon": -0.3528593228128155, "lat": 39.453318252515686}, {"address": "Moreras (Oceanogr\u00e1fico)", "number": 51, "lon": -0.3472273049060467, "lat": 39.45218324552497}, {"address": "Luis Garc\u00eda Berlanga Mart\u00ed - Menorca", "number": 52, "lon": -0.3463402980947426, "lat": 39.45603425797373}, {"address": "Alameda - Pintor Maella", "number": 53, "lon": -0.3481393040048007, "lat": 39.45676426141678}, {"address": "Plaza de Europa", "number": 54, "lon": -0.3526903171951741, "lat": 39.459778273617445}, {"address": "Francia - Pintor Maella", "number": 55, "lon": -0.3486863041159564, "lat": 39.45934326975421}, {"address": "Francia - Menorca", "number": 56, "lon": -0.3444052893928658, "lat": 39.45842126509135}, {"address": "Alameda - Pintor Monle\u00f3n", "number": 57, "lon": -0.3582563324315247, "lat": 39.46447629179199}, {"address": "Plaza Espa\u00f1a", "number": 58, "lon": -0.3815864106638383, "lat": 39.46621830848607}, {"address": "Baleares - R\u00edo Escalona", "number": 59, "lon": -0.3545493213542055, "lat": 39.46308828566762}, {"address": "Baleares - Leb\u00f3n", "number": 60, "lon": -0.3517763125261459, "lat": 39.46223128102797}, {"address": "Vicent Vidal - Pintor Maella", "number": 61, "lon": -0.3478302988674309, "lat": 39.46129327599964}, {"address": "Menorca - Baleares", "number": 62, "lon": -0.3421522812931475, "lat": 39.45981126842254}, {"address": "Av Puerto 19 (Telef\u00f3nica)", "number": 63, "lon": -0.358414330727018, "lat": 39.46777930285978}, {"address": "Av. Puerto 61-63", "number": 64, "lon": -0.3541953172495928, "lat": 39.46651829706714}, {"address": "Av. Puerto - Doctor Manuel Candela", "number": 65, "lon": -0.3508373061951808, "lat": 39.465516292011046}, {"address": "Guillem de Anglesola - Av. Puerto", "number": 66, "lon": -0.3462612916525901, "lat": 39.46427128532339}, {"address": "Juan Verdeguer - Toneleros", "number": 67, "lon": -0.3367982630402228, "lat": 39.45886026320377}, {"address": "Av. Puerto - Jos\u00e9 Aguilar", "number": 68, "lon": -0.3417332778594022, "lat": 39.46280327868023}, {"address": "Av. Puerto - Serrer\u00eda", "number": 69, "lon": -0.3387212679875118, "lat": 39.46195227384504}, {"address": "Col\u00f3n, 44", "number": 70, "lon": -0.3716462894107889, "lat": 39.46921322131946}, {"address": "Av. Puerto - Plaza Tribunal de les Aig\u00fces", "number": 71, "lon": -0.3335312512230816, "lat": 39.46038026686525}, {"address": "Ramiro de Maeztu - Peris Brell", "number": 72, "lon": -0.3464462819621424, "lat": 39.4672572011624}, {"address": "Jer\u00f3nimo Monsoriu - Industria", "number": 73, "lon": -0.3428792786496773, "lat": 39.4662592905475}, {"address": "Plaza San Felipe Neri (Mercado Algir\u00f3s)", "number": 74, "lon": -0.3537343124957471, "lat": 39.469949307546806}, {"address": "Rep\u00fablica Argentina - Campoamor", "number": 75, "lon": -0.3517013042029511, "lat": 39.472113313853896}, {"address": "Campoamor - M\u00fasico Gin\u00e9s", "number": 76, "lon": -0.343461277578989, "lat": 39.47008330347364}, {"address": "Molinell - Calder\u00f3n de la Barca", "number": 77, "lon": -0.3656673419583549, "lat": 39.48497336307338}, {"address": "Arag\u00f3n - Vicente Sancho Tello", "number": 78, "lon": -0.358688329939162, "lat": 39.46994531050937}, {"address": "Arag\u00f3n - Ernesto Ferrer", "number": 79, "lon": -0.357242322435451, "lat": 39.4727793187067}, {"address": "Amadeo de Saboya (frente Ayuntamiento)", "number": 80, "lon": -0.3622983394473602, "lat": 39.47374232444908}, {"address": "Micer Masc\u00f3 - Rodriguez Fornos", "number": 81, "lon": -0.3609783335465967, "lat": 39.47512832851177}, {"address": "Guillem de Castro (Torres de Quart)", "number": 82, "lon": -0.3839144104057024, "lat": 39.47605634238628}, {"address": "General Elio - Llano del Real", "number": 83, "lon": -0.3669703519914759, "lat": 39.47758533929587}, {"address": "Serrer\u00eda, 67", "number": 84, "lon": -0.3352259768659084, "lat": 39.46712309239452}, {"address": "Blasco Iba\u00f1ez - Jaime Roig", "number": 85, "lon": -0.3647153422684407, "lat": 39.479464345022826}, {"address": "Gaspar Aguilar - Vicente Parra", "number": 86, "lon": -0.3911934519157556, "lat": 39.4552402764855}, {"address": "Blasco Iba\u00f1ez - Doctor G\u00f3mez Ferrer (Cl\u00ednico)", "number": 87, "lon": -0.3618803335785998, "lat": 39.47851834019109}, {"address": "Blasco Iba\u00f1ez, 28 (F. Geograf\u00eda e Historia)", "number": 88, "lon": -0.3611423324837735, "lat": 39.47751233609685}, {"address": "Blasco Iba\u00f1ez, 23 (F. Filosof\u00eda y Psicolog\u00eda)", "number": 89, "lon": -0.3593183259089267, "lat": 39.47780233689744}, {"address": "Blasco Iba\u00f1ez, 32 (F. Filolog\u00eda)", "number": 90, "lon": -0.3589673254467337, "lat": 39.47673433298103}, {"address": "Grabador Jordan - Escultor Pastor", "number": 91, "lon": -0.3675733796970313, "lat": 39.44412522887422}, {"address": "Blasco Iba\u00f1ez - Arag\u00f3n", "number": 92, "lon": -0.355968315835597, "lat": 39.47586032883543}, {"address": "Blasco Iba\u00f1ez - Poeta Dur\u00e1n Tortajada", "number": 93, "lon": -0.343809277423822, "lat": 39.47228231067077}, {"address": "Blasco Iba\u00f1ez - Clariano", "number": 94, "lon": -0.3515833014492605, "lat": 39.47537832465668}, {"address": "Naranjos (Magisterio)", "number": 95, "lon": -0.3461192793966847, "lat": 39.47983533734356}, {"address": "Blasco Iba\u00f1ez - Yecla", "number": 96, "lon": -0.3482142912637639, "lat": 39.47355431688417}, {"address": "Blasco Iba\u00f1ez 121", "number": 97, "lon": -0.3431322739648798, "lat": 39.47306831276613}, {"address": "Justo y Pastor - Duque de Gaeta", "number": 98, "lon": -0.348442294427372, "lat": 39.469680303996114}, {"address": "Blasco Iba\u00f1ez 166 - Pintor Jos\u00e9 Mongrell", "number": 99, "lon": -0.3404842660990001, "lat": 39.47134430635022}, {"address": "Blasco Iba\u00f1ez - Mestre Ripoll", "number": 100, "lon": -0.3381502585344567, "lat": 39.47163430564687}];
+        var mapInstance = null;
+        var pinMode = null; // 'start' or 'end'
+        var startMarker = null;
+        var endMarker = null;
+        var startCoords = null;
+        var endCoords = null;
+        
+        function setMap(map) {
+            mapInstance = map;
+            
+            // Add click listener to map
+            mapInstance.on('click', function(e) {
+                if (pinMode === 'start') {
+                    placeStartPin(e.latlng.lat, e.latlng.lng);
+                } else if (pinMode === 'end') {
+                    placeEndPin(e.latlng.lat, e.latlng.lng);
+                }
+            });
+        }
+        
+        function togglePinMode(mode) {
+            if (pinMode === mode) {
+                // Deactivate
+                pinMode = null;
+                document.getElementById(mode + '-pin-btn').classList.remove('active');
+                document.getElementById(mode + '-status').textContent = 'Click to activate';
+            } else {
+                // Deactivate other mode
+                if (pinMode) {
+                    document.getElementById(pinMode + '-pin-btn').classList.remove('active');
+                    document.getElementById(pinMode + '-status').textContent = 'Click to activate';
+                }
+                // Activate this mode
+                pinMode = mode;
+                document.getElementById(mode + '-pin-btn').classList.add('active');
+                document.getElementById(mode + '-status').textContent = 'Click on map to place';
+            }
+        }
+        
+        function placeStartPin(lat, lng) {
+            if (!mapInstance) return;
+            
+            // Remove existing start marker
+            if (startMarker) {
+                mapInstance.removeLayer(startMarker);
+            }
+            
+            // Create green marker
+            var greenIcon = L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+            
+            startMarker = L.marker([lat, lng], {icon: greenIcon}).addTo(mapInstance);
+            startMarker.bindPopup('<b>Start Location</b>').openPopup();
+            startCoords = {lat: lat, lng: lng};
+            
+            // Update status
+            document.getElementById('start-status').textContent = '✓ Placed at ' + lat.toFixed(4) + ', ' + lng.toFixed(4);
+            
+            // Deactivate pin mode
+            pinMode = null;
+            document.getElementById('start-pin-btn').classList.remove('active');
+            
+            // Enable route planner if both pins are placed
+            checkRoutePlannerButton();
+        }
+        
+        function placeEndPin(lat, lng) {
+            if (!mapInstance) return;
+            
+            // Remove existing end marker
+            if (endMarker) {
+                mapInstance.removeLayer(endMarker);
+            }
+            
+            // Create red marker
+            var redIcon = L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+            
+            endMarker = L.marker([lat, lng], {icon: redIcon}).addTo(mapInstance);
+            endMarker.bindPopup('<b>End Location</b>').openPopup();
+            endCoords = {lat: lat, lng: lng};
+            
+            // Update status
+            document.getElementById('end-status').textContent = '✓ Placed at ' + lat.toFixed(4) + ', ' + lng.toFixed(4);
+            
+            // Deactivate pin mode
+            pinMode = null;
+            document.getElementById('end-pin-btn').classList.remove('active');
+            
+            // Enable route planner if both pins are placed
+            checkRoutePlannerButton();
+        }
+        
+        function clearAllPins() {
+            if (startMarker && mapInstance) {
+                mapInstance.removeLayer(startMarker);
+                startMarker = null;
+                startCoords = null;
+                document.getElementById('start-status').textContent = 'Click to activate';
+            }
+            if (endMarker && mapInstance) {
+                mapInstance.removeLayer(endMarker);
+                endMarker = null;
+                endCoords = null;
+                document.getElementById('end-status').textContent = 'Click to activate';
+            }
+            pinMode = null;
+            document.getElementById('start-pin-btn').classList.remove('active');
+            document.getElementById('end-pin-btn').classList.remove('active');
+            checkRoutePlannerButton();
+        }
+        
+        function openPanel(stationNumber, address, lat, lon) {
+            document.getElementById('station-number').textContent = stationNumber;
+            document.getElementById('station-address').textContent = address;
+            document.getElementById('station-coords').textContent = lat.toFixed(6) + ', ' + lon.toFixed(6);
+            document.getElementById('side-panel').classList.add('open');
+        }
+        
+        function closePanel() {
+            document.getElementById('side-panel').classList.remove('open');
+        }
+        
+        function checkRoutePlannerButton() {
+            var btn = document.getElementById('plan-route-btn');
+            if (startCoords && endCoords) {
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+            }
+        }
+        
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371; // Earth's radius in km
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+        
+        function goToRoutePlanner() {
+            if (!startCoords || !endCoords) return;
+            
+            // Find 3 closest stations to start
+            var startStations = allStations.map(function(station) {
+                return {
+                    station: station,
+                    distance: calculateDistance(startCoords.lat, startCoords.lng, station.lat, station.lon)
+                };
+            }).sort(function(a, b) {
+                return a.distance - b.distance;
+            }).slice(0, 3);
+            
+            // Find 3 closest stations to end
+            var endStations = allStations.map(function(station) {
+                return {
+                    station: station,
+                    distance: calculateDistance(endCoords.lat, endCoords.lng, station.lat, station.lon)
+                };
+            }).sort(function(a, b) {
+                return a.distance - b.distance;
+            }).slice(0, 3);
+            
+            // Build URL with parameters
+            var params = new URLSearchParams();
+            params.set('start_lat', startCoords.lat);
+            params.set('start_lng', startCoords.lng);
+            params.set('end_lat', endCoords.lat);
+            params.set('end_lng', endCoords.lng);
+            params.set('start_stations', JSON.stringify(startStations));
+            params.set('end_stations', JSON.stringify(endStations));
+            
+            // Navigate to route planner page
+            window.location.href = 'route_planner.html?' + params.toString();
+        }
+        
+        // Initialize map reference when ready
+        (function initMap() {
+            var attempts = 0;
+            var maxAttempts = 50;
+            
+            function findMap() {
+                attempts++;
+                for (var key in window) {
+                    if (window[key] && typeof window[key] === 'object' && window[key].hasOwnProperty('_layers')) {
+                        setMap(window[key]);
+                        console.log('Map initialized successfully');
+                        return;
+                    }
+                }
+                if (attempts < maxAttempts) {
+                    setTimeout(findMap, 100);
+                }
+            }
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', findMap);
+            } else {
+                findMap();
+            }
+        })();
+    </script>
+    
+    
+            <div class="folium-map" id="map_87116a1fc202a576a2b9619cdc9ea24c" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_87116a1fc202a576a2b9619cdc9ea24c = L.map(
+                "map_87116a1fc202a576a2b9619cdc9ea24c",
+                {
+                    center: [39.46758463723545, -0.36327467640070454],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_51debaeb1088f03e64a75db9cf5d1bae = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_51debaeb1088f03e64a75db9cf5d1bae.addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var marker_aaf9044be9befa2486110a0745981fa7 = L.marker(
+                [39.48004223020643, -0.3829292797331582],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_5b31bd15cfba6e0dfffcd6716aaac738 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(1, \u0027C/GUILLEM DE CASTRO esquina con C/NA JORDANA\u0027, 39.48004223020643, -0.3829292797331582)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_aaf9044be9befa2486110a0745981fa7.bindTooltip(
+                `<div>
+                     C/GUILLEM DE CASTRO esquina con C/NA JORDANA
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_aaf9044be9befa2486110a0745981fa7.setIcon(div_icon_5b31bd15cfba6e0dfffcd6716aaac738);
+            
+    
+            var marker_331e62c58b39e0efa6ef1cc137081cf8 = L.marker(
+                [39.47988935334888, -0.3797483936090024],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_7754032a99697fa8670b8d096dc8a701 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(2, \u0027Salvador Giner - C. Museo\u0027, 39.47988935334888, -0.3797483936090024)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_331e62c58b39e0efa6ef1cc137081cf8.bindTooltip(
+                `<div>
+                     Salvador Giner - C. Museo
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_331e62c58b39e0efa6ef1cc137081cf8.setIcon(div_icon_7754032a99697fa8670b8d096dc8a701);
+            
+    
+            var marker_90cee620512a59911de76cdadb5c89e1 = L.marker(
+                [39.4768353435743, -0.3802883976424855],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_23d6b41b885ae7d2c99677cd2f4d94cb = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(3, \u0027Plaza del Musico L\u00f3pez Chavarri\u0027, 39.4768353435743, -0.3802883976424855)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_90cee620512a59911de76cdadb5c89e1.bindTooltip(
+                `<div>
+                     Plaza del Musico López Chavarri
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_90cee620512a59911de76cdadb5c89e1.setIcon(div_icon_23d6b41b885ae7d2c99677cd2f4d94cb);
+            
+    
+            var marker_c2f4910c2ddfcc2370dd0ca1632ab434 = L.marker(
+                [39.47674734083149, -0.375342380894589],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_ef71d508e42dc0fb7e27fc4cfec2610b = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(4, \u0027Plaza de la Virgen - Bail\u00eda\u0027, 39.47674734083149, -0.375342380894589)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_c2f4910c2ddfcc2370dd0ca1632ab434.bindTooltip(
+                `<div>
+                     Plaza de la Virgen - Bailía
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c2f4910c2ddfcc2370dd0ca1632ab434.setIcon(div_icon_ef71d508e42dc0fb7e27fc4cfec2610b);
+            
+    
+            var marker_b1e54752bded6c549982a08db0443a47 = L.marker(
+                [39.476895339123786, -0.3711403661399108],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_08cccc239476500a0a07e6a601d550c5 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(5, \u0027Plaza Poeta Llorente\u0027, 39.476895339123786, -0.3711403661399108)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_b1e54752bded6c549982a08db0443a47.bindTooltip(
+                `<div>
+                     Plaza Poeta Llorente
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b1e54752bded6c549982a08db0443a47.setIcon(div_icon_08cccc239476500a0a07e6a601d550c5);
+            
+    
+            var marker_8cf1d91f39cfb9d7b60aa12e0aeab73c = L.marker(
+                [39.47279833147815, -0.3840834139387113],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_28f43a91cc3e52de1c5f1f0030eb178c = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(6, \u0027Guillem de Castro - San Pedro Pascual\u0027, 39.47279833147815, -0.3840834139387113)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_8cf1d91f39cfb9d7b60aa12e0aeab73c.bindTooltip(
+                `<div>
+                     Guillem de Castro - San Pedro Pascual
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8cf1d91f39cfb9d7b60aa12e0aeab73c.setIcon(div_icon_28f43a91cc3e52de1c5f1f0030eb178c);
+            
+    
+            var marker_b12fb66929a0c9aeb7bee6809a921071 = L.marker(
+                [39.47487233593648, -0.3791853952972924],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_2a8d14e9ca445350cabfa4752be9050b = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(7, \u0027Plaza del Mercado - Taula de Canvis\u0027, 39.47487233593648, -0.3791853952972924)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_b12fb66929a0c9aeb7bee6809a921071.bindTooltip(
+                `<div>
+                     Plaza del Mercado - Taula de Canvis
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b12fb66929a0c9aeb7bee6809a921071.setIcon(div_icon_2a8d14e9ca445350cabfa4752be9050b);
+            
+    
+            var marker_a6022e2d923587961ed4c76561c183d2 = L.marker(
+                [39.47388122366064, -0.3752982847143531],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_c78d047dce125f5dcde5e4937c175a38 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(8, \u0027Plaza de la Reina - Mar\u0027, 39.47388122366064, -0.3752982847143531)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_a6022e2d923587961ed4c76561c183d2.bindTooltip(
+                `<div>
+                     Plaza de la Reina - Mar
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a6022e2d923587961ed4c76561c183d2.setIcon(div_icon_c78d047dce125f5dcde5e4937c175a38);
+            
+    
+            var marker_98b84f4765f3032d85b190a7dd81d13a = L.marker(
+                [39.47435533016869, -0.3699303648826442],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_e636f0882153a26cbe7b95fb1f059bce = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(9, \u0027Plaza de Tetu\u00e1n\u0027, 39.47435533016869, -0.3699303648826442)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_98b84f4765f3032d85b190a7dd81d13a.bindTooltip(
+                `<div>
+                     Plaza de Tetuán
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_98b84f4765f3032d85b190a7dd81d13a.setIcon(div_icon_e636f0882153a26cbe7b95fb1f059bce);
+            
+    
+            var marker_5a574f99793966c8e5e8273dabcd11a5 = L.marker(
+                [39.470816323984536, -0.3826104109763401],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_3f2185604ab095b2e9c47c3cdc8feb0d = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(10, \u0027Hospital - Horno del Hospital\u0027, 39.470816323984536, -0.3826104109763401)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_5a574f99793966c8e5e8273dabcd11a5.bindTooltip(
+                `<div>
+                     Hospital - Horno del Hospital
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5a574f99793966c8e5e8273dabcd11a5.setIcon(div_icon_3f2185604ab095b2e9c47c3cdc8feb0d);
+            
+    
+            var marker_7c744f3ab9968fdb13594374bd7e4880 = L.marker(
+                [39.47118632283677, -0.3767843903416451],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_4ec01451efeed419eca2b018d31b109f = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(11, \u0027Plaza Ayuntamiento - Cotanda\u0027, 39.47118632283677, -0.3767843903416451)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_7c744f3ab9968fdb13594374bd7e4880.bindTooltip(
+                `<div>
+                     Plaza Ayuntamiento - Cotanda
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7c744f3ab9968fdb13594374bd7e4880.setIcon(div_icon_4ec01451efeed419eca2b018d31b109f);
+            
+    
+            var marker_3c7819c2027645e590309b5593695877 = L.marker(
+                [39.47196722343732, -0.3740102862977963],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_0a8bf704fe0b7ddca950a820b07faee0 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(12, \u0027Calle Salv\u00e1 - Calle Poeta Querol\u0027, 39.47196722343732, -0.3740102862977963)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_3c7819c2027645e590309b5593695877.bindTooltip(
+                `<div>
+                     Calle Salvá - Calle Poeta Querol
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3c7819c2027645e590309b5593695877.setIcon(div_icon_0a8bf704fe0b7ddca950a820b07faee0);
+            
+    
+            var marker_d682468585dbcd2496399e1d003e17ae = L.marker(
+                [39.4720623227334, -0.3708743696408533],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_c66671901a500c8beb1ad0b885b74496 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(13, \u0027Alfonso el Magn\u00e1nimo - Nave\u0027, 39.4720623227334, -0.3708743696408533)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_d682468585dbcd2496399e1d003e17ae.bindTooltip(
+                `<div>
+                     Alfonso el Magnánimo - Nave
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d682468585dbcd2496399e1d003e17ae.setIcon(div_icon_c66671901a500c8beb1ad0b885b74496);
+            
+    
+            var marker_7672cf2a21541546326d8f2de3078cc5 = L.marker(
+                [39.46896731649349, -0.3797244022229544],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_e1eb08799596df085d3f67d0a82e071d = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(14, \u0027Huesca - Bar\u00f3n de C\u00e1rcer\u0027, 39.46896731649349, -0.3797244022229544)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_7672cf2a21541546326d8f2de3078cc5.bindTooltip(
+                `<div>
+                     Huesca - Barón de Cárcer
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7672cf2a21541546326d8f2de3078cc5.setIcon(div_icon_e1eb08799596df085d3f67d0a82e071d);
+            
+    
+            var marker_4aa8387707b93eab42894ff9096e9b5e = L.marker(
+                [39.46908831533384, -0.3756373880434071],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_a2b6f788851f0d69a92576db0fdccd41 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(15, \u0027Ribera - Plaza Ayuntamiento\u0027, 39.46908831533384, -0.3756373880434071)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_4aa8387707b93eab42894ff9096e9b5e.bindTooltip(
+                `<div>
+                     Ribera - Plaza Ayuntamiento
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4aa8387707b93eab42894ff9096e9b5e.setIcon(div_icon_a2b6f788851f0d69a92576db0fdccd41);
+            
+    
+            var marker_a9a53d28d6ec2b5951592b5d01f4946e = L.marker(
+                [39.470092316192336, -0.3704333693720587],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_ae4ff87841c0343b513d7fa78c6a1acb = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(16, \u0027Col\u00f3n, 60\u0027, 39.470092316192336, -0.3704333693720587)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_a9a53d28d6ec2b5951592b5d01f4946e.bindTooltip(
+                `<div>
+                     Colón, 60
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a9a53d28d6ec2b5951592b5d01f4946e.setIcon(div_icon_ae4ff87841c0343b513d7fa78c6a1acb);
+            
+    
+            var marker_be5a88970bfe05ce5870eebc1532372e = L.marker(
+                [39.46746831099193, -0.3772593951806123],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_47edfb04e0adf3423a4ddeffc9b47c5c = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(17, \u0027X\u00e1tiva - Bail\u00e9n (Estaci\u00f3n del Norte)\u0027, 39.46746831099193, -0.3772593951806123)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_be5a88970bfe05ce5870eebc1532372e.bindTooltip(
+                `<div>
+                     Xátiva - Bailén (Estación del Norte)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_be5a88970bfe05ce5870eebc1532372e.setIcon(div_icon_47edfb04e0adf3423a4ddeffc9b47c5c);
+            
+    
+            var marker_479bab7e001b95d0204c2d862cdc5a28 = L.marker(
+                [39.468191311513856, -0.3731293798737345],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_e89b58e31f895b7898e7833f66329490 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(18, \u0027Col\u00f3n 20-22\u0027, 39.468191311513856, -0.3731293798737345)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_479bab7e001b95d0204c2d862cdc5a28.bindTooltip(
+                `<div>
+                     Colón 20-22
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_479bab7e001b95d0204c2d862cdc5a28.setIcon(div_icon_e89b58e31f895b7898e7833f66329490);
+            
+    
+            var marker_b3e63cc4130a1932016d7610ed4b062a = L.marker(
+                [39.47436934054566, -0.391590438798602],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_4a5f04aac2f701f80b210a9182e46b50 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(19, \u0027Juan Llorens - Quart\u0027, 39.47436934054566, -0.391590438798602)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_b3e63cc4130a1932016d7610ed4b062a.bindTooltip(
+                `<div>
+                     Juan Llorens - Quart
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b3e63cc4130a1932016d7610ed4b062a.setIcon(div_icon_4a5f04aac2f701f80b210a9182e46b50);
+            
+    
+            var marker_78eb5b5c7397525309c09ba65c256dd2 = L.marker(
+                [39.47503434099054, -0.3878474253260651],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_d2dbb8faaf5fd7718c374d0143b2cbca = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(20, \u0027Quart - Fernando el Cat\u00f3lico\u0027, 39.47503434099054, -0.3878474253260651)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_78eb5b5c7397525309c09ba65c256dd2.bindTooltip(
+                `<div>
+                     Quart - Fernando el Católico
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_78eb5b5c7397525309c09ba65c256dd2.setIcon(div_icon_d2dbb8faaf5fd7718c374d0143b2cbca);
+            
+    
+            var marker_43d591c01b0a860a443170e989aa54c2 = L.marker(
+                [39.4723713328859, -0.3902144354049112],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_0a5e2e327cd72a37cfeb0f281bf9a730 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(21, \u0027Juan Llorens - Literato Gabriel Mir\u00f3\u0027, 39.4723713328859, -0.3902144354049112)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_43d591c01b0a860a443170e989aa54c2.bindTooltip(
+                `<div>
+                     Juan Llorens - Literato Gabriel Miró
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_43d591c01b0a860a443170e989aa54c2.setIcon(div_icon_0a5e2e327cd72a37cfeb0f281bf9a730);
+            
+    
+            var marker_b349ed72a35dbbf3da5ef5846e5c466f = L.marker(
+                [39.46978732404922, -0.3883534313205414],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_8d78ad7a17989423eef24771d4905872 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(22, \u0027Angel Guimer\u00e1 - Juan Llorens\u0027, 39.46978732404922, -0.3883534313205414)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_b349ed72a35dbbf3da5ef5846e5c466f.bindTooltip(
+                `<div>
+                     Angel Guimerá - Juan Llorens
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b349ed72a35dbbf3da5ef5846e5c466f.setIcon(div_icon_8d78ad7a17989423eef24771d4905872);
+            
+    
+            var marker_502db24217959ad80f4cd306e6dfa8a5 = L.marker(
+                [39.47162832874852, -0.3861784216967592],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_abbc463931a1311f3668f6fdae181df4 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(23, \u0027Fernando el Cat\u00f3lico - Erudito Orellana\u0027, 39.47162832874852, -0.3861784216967592)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_502db24217959ad80f4cd306e6dfa8a5.bindTooltip(
+                `<div>
+                     Fernando el Católico - Erudito Orellana
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_502db24217959ad80f4cd306e6dfa8a5.setIcon(div_icon_abbc463931a1311f3668f6fdae181df4);
+            
+    
+            var marker_0bfb03e8d3c8ad41dfc233eeedc262d8 = L.marker(
+                [39.469077319212495, -0.3840274173384119],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_45d6dd88f9f252e41c7c25d453cc007f = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(24, \u0027Fernando el Cat\u00f3lico - Cuenca\u0027, 39.469077319212495, -0.3840274173384119)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_0bfb03e8d3c8ad41dfc233eeedc262d8.bindTooltip(
+                `<div>
+                     Fernando el Católico - Cuenca
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0bfb03e8d3c8ad41dfc233eeedc262d8.setIcon(div_icon_45d6dd88f9f252e41c7c25d453cc007f);
+            
+    
+            var marker_076b97cd76c9004d289cc85a2fa6c02d = L.marker(
+                [39.46772931656263, -0.3886104333408022],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_1df4bd0e5110bf71084fa7b4046d5d84 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(25, \u0027Alberique, 18 (Abastos)\u0027, 39.46772931656263, -0.3886104333408022)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_076b97cd76c9004d289cc85a2fa6c02d.bindTooltip(
+                `<div>
+                     Alberique, 18 (Abastos)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_076b97cd76c9004d289cc85a2fa6c02d.setIcon(div_icon_1df4bd0e5110bf71084fa7b4046d5d84);
+            
+    
+            var marker_f1dc0a2f22717322d57e9aed7dca8497 = L.marker(
+                [39.46633523268935, -0.3858642993911739],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_87537470596e10f1485a130029a04cee = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(26, \u0027San Jos\u00e9 de Calasanz - Salas Quiroga\u0027, 39.46633523268935, -0.3858642993911739)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_f1dc0a2f22717322d57e9aed7dca8497.bindTooltip(
+                `<div>
+                     San José de Calasanz - Salas Quiroga
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f1dc0a2f22717322d57e9aed7dca8497.setIcon(div_icon_87537470596e10f1485a130029a04cee);
+            
+    
+            var marker_8dc259114ae60ada1d0bfe40e3b1f75f = L.marker(
+                [39.4633622993056, -0.3818514137102655],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_d1217fc7a264995fcd3797eeb0636b2d = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(27, \u0027San Vicente Martir - Doctor Vil\u00e1 Barber\u00e1\u0027, 39.4633622993056, -0.3818514137102655)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_8dc259114ae60ada1d0bfe40e3b1f75f.bindTooltip(
+                `<div>
+                     San Vicente Martir - Doctor Vilá Barberá
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8dc259114ae60ada1d0bfe40e3b1f75f.setIcon(div_icon_d1217fc7a264995fcd3797eeb0636b2d);
+            
+    
+            var marker_5cc8325ab43aa5b879727e5c98fdc892 = L.marker(
+                [39.47158231958138, -0.3677513588006829],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_5a592c4ae4538db555214e86ee887fd1 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(28, \u0027Navarro Reverter - Grabador Esteve\u0027, 39.47158231958138, -0.3677513588006829)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_5cc8325ab43aa5b879727e5c98fdc892.bindTooltip(
+                `<div>
+                     Navarro Reverter - Grabador Esteve
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5cc8325ab43aa5b879727e5c98fdc892.setIcon(div_icon_5a592c4ae4538db555214e86ee887fd1);
+            
+    
+            var marker_451d39430d6fa516204c93fcda5916de = L.marker(
+                [39.47011231364647, -0.3652993525279599],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_e5678ad1f047c531483d1ae2e8ffdfe7 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(29, \u0027Plaza Am\u00e9rica - Cirilo Amor\u00f3s - Sorn\u00ed\u0027, 39.47011231364647, -0.3652993525279599)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_451d39430d6fa516204c93fcda5916de.bindTooltip(
+                `<div>
+                     Plaza América - Cirilo Amorós - Sorní
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_451d39430d6fa516204c93fcda5916de.setIcon(div_icon_e5678ad1f047c531483d1ae2e8ffdfe7);
+            
+    
+            var marker_1346a61cf769dfc6ef8f7014c9ac17c3 = L.marker(
+                [39.46860130988493, -0.3684993636557958],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_7b9dd1f61393a29c0c55a98ded5c5dc4 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(30, \u0027Cirilo Amor\u00f3s - Jorge Juan (Mercado Col\u00f3n)\u0027, 39.46860130988493, -0.3684993636557958)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_1346a61cf769dfc6ef8f7014c9ac17c3.bindTooltip(
+                `<div>
+                     Cirilo Amorós - Jorge Juan (Mercado Colón)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1346a61cf769dfc6ef8f7014c9ac17c3.setIcon(div_icon_7b9dd1f61393a29c0c55a98ded5c5dc4);
+            
+    
+            var marker_da54e567502f08cd9a906a3ae743e3ba = L.marker(
+                [39.467365304622646, -0.3650283531086902],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_c53711bec38c4ef125b94e667bcbe92c = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(31, \u0027Salamanca - Conde Altea\u0027, 39.467365304622646, -0.3650283531086902)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_da54e567502f08cd9a906a3ae743e3ba.bindTooltip(
+                `<div>
+                     Salamanca - Conde Altea
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_da54e567502f08cd9a906a3ae743e3ba.setIcon(div_icon_c53711bec38c4ef125b94e667bcbe92c);
+            
+    
+            var marker_7137e2a4791359ef30d091ec0ae84399 = L.marker(
+                [39.46600630156446, -0.3682473649948816],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_1ac9442d9967b09c986fc3478a96679a = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(32, \u0027Conde Altea - Almirante Cadarso\u0027, 39.46600630156446, -0.3682473649948816)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_7137e2a4791359ef30d091ec0ae84399.bindTooltip(
+                `<div>
+                     Conde Altea - Almirante Cadarso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7137e2a4791359ef30d091ec0ae84399.setIcon(div_icon_1ac9442d9967b09c986fc3478a96679a);
+            
+    
+            var marker_28bb521cb46c9f4dc237c57938c4968b = L.marker(
+                [39.46481830023885, -0.3739903856231028],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_4fb891048b6a911299bb055e152d30e7 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(33, \u0027German\u00edas - Ruzafa\u0027, 39.46481830023885, -0.3739903856231028)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_28bb521cb46c9f4dc237c57938c4968b.bindTooltip(
+                `<div>
+                     Germanías - Ruzafa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_28bb521cb46c9f4dc237c57938c4968b.setIcon(div_icon_4fb891048b6a911299bb055e152d30e7);
+            
+    
+            var marker_648659ce272bc7674590158f3852ee29 = L.marker(
+                [39.46412229654908, -0.3699613729909211],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_9845dcb6ea5e577f43bb94331be5f178 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(34, \u0027Regne de Valencia - Doctor Sumsi\u0027, 39.46412229654908, -0.3699613729909211)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_648659ce272bc7674590158f3852ee29.bindTooltip(
+                `<div>
+                     Regne de Valencia - Doctor Sumsi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_648659ce272bc7674590158f3852ee29.setIcon(div_icon_9845dcb6ea5e577f43bb94331be5f178);
+            
+    
+            var marker_10731efa5d3bc9c938c7f550c463b670 = L.marker(
+                [39.46374929341137, -0.3669943634005945],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_a47c898189a40838d81828afa3675f0a = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(35, \u0027Regne de Valencia - Almirante Cadarso\u0027, 39.46374929341137, -0.3669943634005945)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_10731efa5d3bc9c938c7f550c463b670.bindTooltip(
+                `<div>
+                     Regne de Valencia - Almirante Cadarso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_10731efa5d3bc9c938c7f550c463b670.setIcon(div_icon_a47c898189a40838d81828afa3675f0a);
+            
+    
+            var marker_4b190089ca0c71f3bad6b33d8decaabe = L.marker(
+                [39.47907234886095, -0.3754363798581042],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_36c88fd9c084bbd42dcd997a7e5acda9 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(36, \u0027Plaza de los Fueros - Conde Trenor\u0027, 39.47907234886095, -0.3754363798581042)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_4b190089ca0c71f3bad6b33d8decaabe.bindTooltip(
+                `<div>
+                     Plaza de los Fueros - Conde Trenor
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4b190089ca0c71f3bad6b33d8decaabe.setIcon(div_icon_36c88fd9c084bbd42dcd997a7e5acda9);
+            
+    
+            var marker_8f029bd6eec8caea648a82476098e979 = L.marker(
+                [39.460937800028375, -0.3664406250017559],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_051315b57095ec1aa25c965132ab7a9b = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(37, \u0027Peris y Valero - Luis Sant\u00e1ngel\u0027, 39.460937800028375, -0.3664406250017559)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_8f029bd6eec8caea648a82476098e979.bindTooltip(
+                `<div>
+                     Peris y Valero - Luis Santángel
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8f029bd6eec8caea648a82476098e979.setIcon(div_icon_051315b57095ec1aa25c965132ab7a9b);
+            
+    
+            var marker_5c8372a6d065a7aa3d088ee5d9440c09 = L.marker(
+                [39.45940204927687, -0.3702493773693626],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_9880727e4ecd6fd3cb14c0c345212c4f = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(38, \u0027Peris y Valero - Cabo Jubi\u0027, 39.45940204927687, -0.3702493773693626)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_5c8372a6d065a7aa3d088ee5d9440c09.bindTooltip(
+                `<div>
+                     Peris y Valero - Cabo Jubi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5c8372a6d065a7aa3d088ee5d9440c09.setIcon(div_icon_9880727e4ecd6fd3cb14c0c345212c4f);
+            
+    
+            var marker_e6bb36d45f77a0df7e93281aa7ad863a = L.marker(
+                [39.457854277261184, -0.3739313916673185],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_15bba0d98d74d68b8dedf9652c5059f9 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(39, \u0027Peris y Valero - Cuba\u0027, 39.457854277261184, -0.3739313916673185)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_e6bb36d45f77a0df7e93281aa7ad863a.bindTooltip(
+                `<div>
+                     Peris y Valero - Cuba
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e6bb36d45f77a0df7e93281aa7ad863a.setIcon(div_icon_15bba0d98d74d68b8dedf9652c5059f9);
+            
+    
+            var marker_608793efcd7b4b5539c14f10839c0ae7 = L.marker(
+                [39.47046631970196, -0.3748243837183276],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_d1b0e33e15b72d017c917c865467c468 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(40, \u0027Barcas, 11\u0027, 39.47046631970196, -0.3748243837183276)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_608793efcd7b4b5539c14f10839c0ae7.bindTooltip(
+                `<div>
+                     Barcas, 11
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_608793efcd7b4b5539c14f10839c0ae7.setIcon(div_icon_d1b0e33e15b72d017c917c865467c468);
+            
+    
+            var marker_6bb16b71912ead90a89041fd9141c3f4 = L.marker(
+                [39.458912276426375, -0.3647763590897919],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_34b450de7f1c4fc77744fe7b41857576 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(41, \u0027General Urrutia - Granada\u0027, 39.458912276426375, -0.3647763590897919)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_6bb16b71912ead90a89041fd9141c3f4.bindTooltip(
+                `<div>
+                     General Urrutia - Granada
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6bb16b71912ead90a89041fd9141c3f4.setIcon(div_icon_34b450de7f1c4fc77744fe7b41857576);
+            
+    
+            var marker_7d01455308f012c543f4ace2a838fffd = L.marker(
+                [39.45878127329601, -0.3586583378805894],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_c790abc9033e37add869b77521931670 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(42, \u0027Av. de la Plata (Museo Fallero)\u0027, 39.45878127329601, -0.3586583378805894)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_7d01455308f012c543f4ace2a838fffd.bindTooltip(
+                `<div>
+                     Av. de la Plata (Museo Fallero)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7d01455308f012c543f4ace2a838fffd.setIcon(div_icon_c790abc9033e37add869b77521931670);
+            
+    
+            var marker_1832456b2e03a71ea29cb055c75950aa = L.marker(
+                [39.459477276259406, -0.3611533458364356],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_c65f630a05acfb274e74b993185d126e = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(43, \u0027Escultor Jos\u00e9 Capuz - Oriente\u0027, 39.459477276259406, -0.3611533458364356)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_1832456b2e03a71ea29cb055c75950aa.bindTooltip(
+                `<div>
+                     Escultor José Capuz - Oriente
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1832456b2e03a71ea29cb055c75950aa.setIcon(div_icon_c65f630a05acfb274e74b993185d126e);
+            
+    
+            var marker_89a8387e498594fc56bdc5bfb77c15ac = L.marker(
+                [39.45642926768604, -0.3630143545257616],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_41fd82785af643866231c3a7dc5b9ef0 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(44, \u0027General Urrutia - Av. de la Plata\u0027, 39.45642926768604, -0.3630143545257616)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_89a8387e498594fc56bdc5bfb77c15ac.bindTooltip(
+                `<div>
+                     General Urrutia - Av. de la Plata
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_89a8387e498594fc56bdc5bfb77c15ac.setIcon(div_icon_41fd82785af643866231c3a7dc5b9ef0);
+            
+    
+            var marker_a7dd240f67d137721875ffb5761ac6dd = L.marker(
+                [39.45381925759081, -0.3618553529234309],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_a0f9b71efd6e4d0f67144d79fa525080 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(45, \u0027Hermanos Maristas - General Urrutia\u0027, 39.45381925759081, -0.3618553529234309)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_a7dd240f67d137721875ffb5761ac6dd.bindTooltip(
+                `<div>
+                     Hermanos Maristas - General Urrutia
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a7dd240f67d137721875ffb5761ac6dd.setIcon(div_icon_a0f9b71efd6e4d0f67144d79fa525080);
+            
+    
+            var marker_28bc1d62c47c97a15856515fcb0e3aae = L.marker(
+                [39.455509261762266, -0.3587873408716088],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_bc0932cd22ba25b0f18376ce5882e727 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(46, \u0027Pintor Luis Arcas - Inst. Obrero Valenciano\u0027, 39.455509261762266, -0.3587873408716088)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_28bc1d62c47c97a15856515fcb0e3aae.bindTooltip(
+                `<div>
+                     Pintor Luis Arcas - Inst. Obrero Valenciano
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_28bc1d62c47c97a15856515fcb0e3aae.setIcon(div_icon_bc0932cd22ba25b0f18376ce5882e727);
+            
+    
+            var marker_920657e5ee676b631ec09c5a90863e37 = L.marker(
+                [39.45651226440267, -0.3554183288036281],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_2dbf25e869beef367702a1f8ac7d046c = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(47, \u0027Autopista del Saler - Puente Monteolivete\u0027, 39.45651226440267, -0.3554183288036281)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_920657e5ee676b631ec09c5a90863e37.bindTooltip(
+                `<div>
+                     Autopista del Saler - Puente Monteolivete
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_920657e5ee676b631ec09c5a90863e37.setIcon(div_icon_2dbf25e869beef367702a1f8ac7d046c);
+            
+    
+            var marker_c84075a5f2eab73eff83f7151e75cca4 = L.marker(
+                [39.450807354184086, -0.3585527382322896],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_4851aba756b106b81ca1dac5ce305afe = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(48, \u0027Antonio Ferrandis - General Urrutia\u0027, 39.450807354184086, -0.3585527382322896)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_c84075a5f2eab73eff83f7151e75cca4.bindTooltip(
+                `<div>
+                     Antonio Ferrandis - General Urrutia
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c84075a5f2eab73eff83f7151e75cca4.setIcon(div_icon_4851aba756b106b81ca1dac5ce305afe);
+            
+    
+            var marker_bd7082430af2b1c323009ceb55cee063 = L.marker(
+                [39.45298693239739, -0.3571104198826364],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_7a14bfd2f20a4df32f5d09b0f22514c4 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(49, \u0027Ricardo Mu\u00f1oz Suay - Mar\u00eda Jos\u00e9 Victoria Fuster (C.C. El Saler)\u0027, 39.45298693239739, -0.3571104198826364)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_bd7082430af2b1c323009ceb55cee063.bindTooltip(
+                `<div>
+                     Ricardo Muñoz Suay - María José Victoria Fuster (C.C. El Saler)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_bd7082430af2b1c323009ceb55cee063.setIcon(div_icon_7a14bfd2f20a4df32f5d09b0f22514c4);
+            
+    
+            var marker_e08b6ed78b08d9cddf934bd2d9b83990 = L.marker(
+                [39.453318252515686, -0.3528593228128155],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_844bae6aad0599ff37318bb8f41f439c = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(50, \u0027Autopista del Saler - Antonio Ferrandis (C.C. El Saler)\u0027, 39.453318252515686, -0.3528593228128155)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_e08b6ed78b08d9cddf934bd2d9b83990.bindTooltip(
+                `<div>
+                     Autopista del Saler - Antonio Ferrandis (C.C. El Saler)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e08b6ed78b08d9cddf934bd2d9b83990.setIcon(div_icon_844bae6aad0599ff37318bb8f41f439c);
+            
+    
+            var marker_1c45fcedf309a24e7c78f4840f7bc000 = L.marker(
+                [39.45218324552497, -0.3472273049060467],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_ef73d9239f31887508532f85e886b6b3 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(51, \u0027Moreras (Oceanogr\u00e1fico)\u0027, 39.45218324552497, -0.3472273049060467)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_1c45fcedf309a24e7c78f4840f7bc000.bindTooltip(
+                `<div>
+                     Moreras (Oceanográfico)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1c45fcedf309a24e7c78f4840f7bc000.setIcon(div_icon_ef73d9239f31887508532f85e886b6b3);
+            
+    
+            var marker_83565c9906bcf6cbfa3d790ba9abc325 = L.marker(
+                [39.45603425797373, -0.3463402980947426],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_451c21a011697917a0c7f8354a1c00bd = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(52, \u0027Luis Garc\u00eda Berlanga Mart\u00ed - Menorca\u0027, 39.45603425797373, -0.3463402980947426)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_83565c9906bcf6cbfa3d790ba9abc325.bindTooltip(
+                `<div>
+                     Luis García Berlanga Martí - Menorca
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_83565c9906bcf6cbfa3d790ba9abc325.setIcon(div_icon_451c21a011697917a0c7f8354a1c00bd);
+            
+    
+            var marker_d3a3bcb78964e5b885fa3c210142b6d3 = L.marker(
+                [39.45676426141678, -0.3481393040048007],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_524d2cf5b8b593d29a64b0eebcd64e73 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(53, \u0027Alameda - Pintor Maella\u0027, 39.45676426141678, -0.3481393040048007)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_d3a3bcb78964e5b885fa3c210142b6d3.bindTooltip(
+                `<div>
+                     Alameda - Pintor Maella
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d3a3bcb78964e5b885fa3c210142b6d3.setIcon(div_icon_524d2cf5b8b593d29a64b0eebcd64e73);
+            
+    
+            var marker_c893c125c193869d600752c861077656 = L.marker(
+                [39.459778273617445, -0.3526903171951741],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_1c97aee071a0ab654193c473444fe146 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(54, \u0027Plaza de Europa\u0027, 39.459778273617445, -0.3526903171951741)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_c893c125c193869d600752c861077656.bindTooltip(
+                `<div>
+                     Plaza de Europa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c893c125c193869d600752c861077656.setIcon(div_icon_1c97aee071a0ab654193c473444fe146);
+            
+    
+            var marker_7b6efda5fbe3fa115a91ac442747ca43 = L.marker(
+                [39.45934326975421, -0.3486863041159564],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_1d4e5c6edc4440777c03dfc6d3f5dfbd = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(55, \u0027Francia - Pintor Maella\u0027, 39.45934326975421, -0.3486863041159564)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_7b6efda5fbe3fa115a91ac442747ca43.bindTooltip(
+                `<div>
+                     Francia - Pintor Maella
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7b6efda5fbe3fa115a91ac442747ca43.setIcon(div_icon_1d4e5c6edc4440777c03dfc6d3f5dfbd);
+            
+    
+            var marker_15e37470cde87e07fd0b1afc679ac8a2 = L.marker(
+                [39.45842126509135, -0.3444052893928658],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_ba9eecc5d39dbdf49a113492dd9a328f = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(56, \u0027Francia - Menorca\u0027, 39.45842126509135, -0.3444052893928658)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_15e37470cde87e07fd0b1afc679ac8a2.bindTooltip(
+                `<div>
+                     Francia - Menorca
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_15e37470cde87e07fd0b1afc679ac8a2.setIcon(div_icon_ba9eecc5d39dbdf49a113492dd9a328f);
+            
+    
+            var marker_d41dec02344d575d88daa500c7bb062f = L.marker(
+                [39.46447629179199, -0.3582563324315247],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_272f8d5115f71e8e6715c7b84c8ce1aa = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(57, \u0027Alameda - Pintor Monle\u00f3n\u0027, 39.46447629179199, -0.3582563324315247)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_d41dec02344d575d88daa500c7bb062f.bindTooltip(
+                `<div>
+                     Alameda - Pintor Monleón
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d41dec02344d575d88daa500c7bb062f.setIcon(div_icon_272f8d5115f71e8e6715c7b84c8ce1aa);
+            
+    
+            var marker_86f194cc0e894b55784303baf7bd4da6 = L.marker(
+                [39.46621830848607, -0.3815864106638383],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_653fcd59bc65490e3c7dd285978ac2a5 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(58, \u0027Plaza Espa\u00f1a\u0027, 39.46621830848607, -0.3815864106638383)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_86f194cc0e894b55784303baf7bd4da6.bindTooltip(
+                `<div>
+                     Plaza España
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_86f194cc0e894b55784303baf7bd4da6.setIcon(div_icon_653fcd59bc65490e3c7dd285978ac2a5);
+            
+    
+            var marker_4dd54422ac1ca79b810359951720281c = L.marker(
+                [39.46308828566762, -0.3545493213542055],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_6cef2c466a890275d5b3242c6ec105ea = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(59, \u0027Baleares - R\u00edo Escalona\u0027, 39.46308828566762, -0.3545493213542055)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_4dd54422ac1ca79b810359951720281c.bindTooltip(
+                `<div>
+                     Baleares - Río Escalona
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4dd54422ac1ca79b810359951720281c.setIcon(div_icon_6cef2c466a890275d5b3242c6ec105ea);
+            
+    
+            var marker_87eec0853dd180cc0cab35afe9c9a9ad = L.marker(
+                [39.46223128102797, -0.3517763125261459],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_45c40d5140ed2c0abff3863929a1a7fb = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(60, \u0027Baleares - Leb\u00f3n\u0027, 39.46223128102797, -0.3517763125261459)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_87eec0853dd180cc0cab35afe9c9a9ad.bindTooltip(
+                `<div>
+                     Baleares - Lebón
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_87eec0853dd180cc0cab35afe9c9a9ad.setIcon(div_icon_45c40d5140ed2c0abff3863929a1a7fb);
+            
+    
+            var marker_7eda6deb051459792b2d5bdba3ee6eee = L.marker(
+                [39.46129327599964, -0.3478302988674309],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_6ff0de83a1fe512496e70a3ecb27502b = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(61, \u0027Vicent Vidal - Pintor Maella\u0027, 39.46129327599964, -0.3478302988674309)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_7eda6deb051459792b2d5bdba3ee6eee.bindTooltip(
+                `<div>
+                     Vicent Vidal - Pintor Maella
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7eda6deb051459792b2d5bdba3ee6eee.setIcon(div_icon_6ff0de83a1fe512496e70a3ecb27502b);
+            
+    
+            var marker_83a6b174ed06746e58e4ad749ba587f9 = L.marker(
+                [39.45981126842254, -0.3421522812931475],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_f42e7c71be31f44fa37fcde94044c0d1 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(62, \u0027Menorca - Baleares\u0027, 39.45981126842254, -0.3421522812931475)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_83a6b174ed06746e58e4ad749ba587f9.bindTooltip(
+                `<div>
+                     Menorca - Baleares
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_83a6b174ed06746e58e4ad749ba587f9.setIcon(div_icon_f42e7c71be31f44fa37fcde94044c0d1);
+            
+    
+            var marker_ff2903c8f65ad29955a6536aacad17a2 = L.marker(
+                [39.46777930285978, -0.358414330727018],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_f7f2fe7c97909e183cb4aadecf01dc29 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(63, \u0027Av Puerto 19 (Telef\u00f3nica)\u0027, 39.46777930285978, -0.358414330727018)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_ff2903c8f65ad29955a6536aacad17a2.bindTooltip(
+                `<div>
+                     Av Puerto 19 (Telefónica)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ff2903c8f65ad29955a6536aacad17a2.setIcon(div_icon_f7f2fe7c97909e183cb4aadecf01dc29);
+            
+    
+            var marker_9e87294923ef2940049391f2149363c1 = L.marker(
+                [39.46651829706714, -0.3541953172495928],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_dd057dcfe2e4bc625eb31d5f2b0fde61 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(64, \u0027Av. Puerto 61-63\u0027, 39.46651829706714, -0.3541953172495928)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_9e87294923ef2940049391f2149363c1.bindTooltip(
+                `<div>
+                     Av. Puerto 61-63
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9e87294923ef2940049391f2149363c1.setIcon(div_icon_dd057dcfe2e4bc625eb31d5f2b0fde61);
+            
+    
+            var marker_973841a5456f15847f354e99710b8da0 = L.marker(
+                [39.465516292011046, -0.3508373061951808],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_b6e9e6605a07bae0dc48b065a21daddd = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(65, \u0027Av. Puerto - Doctor Manuel Candela\u0027, 39.465516292011046, -0.3508373061951808)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_973841a5456f15847f354e99710b8da0.bindTooltip(
+                `<div>
+                     Av. Puerto - Doctor Manuel Candela
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_973841a5456f15847f354e99710b8da0.setIcon(div_icon_b6e9e6605a07bae0dc48b065a21daddd);
+            
+    
+            var marker_ca3eec80a959fb281508b91338ab111b = L.marker(
+                [39.46427128532339, -0.3462612916525901],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_b59747ae476a9a392a98a50f01737066 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(66, \u0027Guillem de Anglesola - Av. Puerto\u0027, 39.46427128532339, -0.3462612916525901)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_ca3eec80a959fb281508b91338ab111b.bindTooltip(
+                `<div>
+                     Guillem de Anglesola - Av. Puerto
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ca3eec80a959fb281508b91338ab111b.setIcon(div_icon_b59747ae476a9a392a98a50f01737066);
+            
+    
+            var marker_60910d9be8faf3834df47d80e0c5744c = L.marker(
+                [39.45886026320377, -0.3367982630402228],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_2cbb55ff8b159c69aee1374f1b771318 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(67, \u0027Juan Verdeguer - Toneleros\u0027, 39.45886026320377, -0.3367982630402228)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_60910d9be8faf3834df47d80e0c5744c.bindTooltip(
+                `<div>
+                     Juan Verdeguer - Toneleros
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_60910d9be8faf3834df47d80e0c5744c.setIcon(div_icon_2cbb55ff8b159c69aee1374f1b771318);
+            
+    
+            var marker_634a54bf30d16ef30bbccfe67d26542f = L.marker(
+                [39.46280327868023, -0.3417332778594022],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_e5c520d61b19d774816d539e6ca786de = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(68, \u0027Av. Puerto - Jos\u00e9 Aguilar\u0027, 39.46280327868023, -0.3417332778594022)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_634a54bf30d16ef30bbccfe67d26542f.bindTooltip(
+                `<div>
+                     Av. Puerto - José Aguilar
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_634a54bf30d16ef30bbccfe67d26542f.setIcon(div_icon_e5c520d61b19d774816d539e6ca786de);
+            
+    
+            var marker_48f60b010b01b5062b00b3c898088156 = L.marker(
+                [39.46195227384504, -0.3387212679875118],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_24ea3954b10f22ee672e00e685283403 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(69, \u0027Av. Puerto - Serrer\u00eda\u0027, 39.46195227384504, -0.3387212679875118)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_48f60b010b01b5062b00b3c898088156.bindTooltip(
+                `<div>
+                     Av. Puerto - Serrería
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_48f60b010b01b5062b00b3c898088156.setIcon(div_icon_24ea3954b10f22ee672e00e685283403);
+            
+    
+            var marker_0eb508be6c4a527a0e7afaf1adb5f0aa = L.marker(
+                [39.46921322131946, -0.3716462894107889],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_cc4aa163e9a50d576c6f96d4df9cc7c7 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(70, \u0027Col\u00f3n, 44\u0027, 39.46921322131946, -0.3716462894107889)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_0eb508be6c4a527a0e7afaf1adb5f0aa.bindTooltip(
+                `<div>
+                     Colón, 44
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0eb508be6c4a527a0e7afaf1adb5f0aa.setIcon(div_icon_cc4aa163e9a50d576c6f96d4df9cc7c7);
+            
+    
+            var marker_7c78990e3756a41f0da1cd4fe7ebb25e = L.marker(
+                [39.46038026686525, -0.3335312512230816],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_eca0c614ecdb35790c158c0445a60c28 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(71, \u0027Av. Puerto - Plaza Tribunal de les Aig\u00fces\u0027, 39.46038026686525, -0.3335312512230816)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_7c78990e3756a41f0da1cd4fe7ebb25e.bindTooltip(
+                `<div>
+                     Av. Puerto - Plaza Tribunal de les Aigües
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7c78990e3756a41f0da1cd4fe7ebb25e.setIcon(div_icon_eca0c614ecdb35790c158c0445a60c28);
+            
+    
+            var marker_fa1cb4b4074920c3178df5389de24d30 = L.marker(
+                [39.4672572011624, -0.3464462819621424],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_fbcff908396865d7ff7398de9a1e3b0c = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(72, \u0027Ramiro de Maeztu - Peris Brell\u0027, 39.4672572011624, -0.3464462819621424)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_fa1cb4b4074920c3178df5389de24d30.bindTooltip(
+                `<div>
+                     Ramiro de Maeztu - Peris Brell
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fa1cb4b4074920c3178df5389de24d30.setIcon(div_icon_fbcff908396865d7ff7398de9a1e3b0c);
+            
+    
+            var marker_9b3b73cc6a04a349588d37ed9de98f09 = L.marker(
+                [39.4662592905475, -0.3428792786496773],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_fa3b0673d7ded0351e51a94a27b8e3dc = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(73, \u0027Jer\u00f3nimo Monsoriu - Industria\u0027, 39.4662592905475, -0.3428792786496773)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_9b3b73cc6a04a349588d37ed9de98f09.bindTooltip(
+                `<div>
+                     Jerónimo Monsoriu - Industria
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9b3b73cc6a04a349588d37ed9de98f09.setIcon(div_icon_fa3b0673d7ded0351e51a94a27b8e3dc);
+            
+    
+            var marker_5f1b2e523a3922d3b1ca5fdddc1afbdc = L.marker(
+                [39.469949307546806, -0.3537343124957471],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_4d7337f618abe1cc07299b8065b63084 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(74, \u0027Plaza San Felipe Neri (Mercado Algir\u00f3s)\u0027, 39.469949307546806, -0.3537343124957471)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_5f1b2e523a3922d3b1ca5fdddc1afbdc.bindTooltip(
+                `<div>
+                     Plaza San Felipe Neri (Mercado Algirós)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5f1b2e523a3922d3b1ca5fdddc1afbdc.setIcon(div_icon_4d7337f618abe1cc07299b8065b63084);
+            
+    
+            var marker_a3f84d856433c5f7224020815c160442 = L.marker(
+                [39.472113313853896, -0.3517013042029511],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_fd0e002fa0e93962b2c1fd64ba71940c = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(75, \u0027Rep\u00fablica Argentina - Campoamor\u0027, 39.472113313853896, -0.3517013042029511)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_a3f84d856433c5f7224020815c160442.bindTooltip(
+                `<div>
+                     República Argentina - Campoamor
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a3f84d856433c5f7224020815c160442.setIcon(div_icon_fd0e002fa0e93962b2c1fd64ba71940c);
+            
+    
+            var marker_24a2591d415a6a05857332045a1d008b = L.marker(
+                [39.47008330347364, -0.343461277578989],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_5280afcad285667410bf830694e5569f = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(76, \u0027Campoamor - M\u00fasico Gin\u00e9s\u0027, 39.47008330347364, -0.343461277578989)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_24a2591d415a6a05857332045a1d008b.bindTooltip(
+                `<div>
+                     Campoamor - Músico Ginés
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_24a2591d415a6a05857332045a1d008b.setIcon(div_icon_5280afcad285667410bf830694e5569f);
+            
+    
+            var marker_6dc7cb5621d2b8af10182b6193cba5ab = L.marker(
+                [39.48497336307338, -0.3656673419583549],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_a378cea67d920b502acbac55f9b8d49e = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(77, \u0027Molinell - Calder\u00f3n de la Barca\u0027, 39.48497336307338, -0.3656673419583549)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_6dc7cb5621d2b8af10182b6193cba5ab.bindTooltip(
+                `<div>
+                     Molinell - Calderón de la Barca
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6dc7cb5621d2b8af10182b6193cba5ab.setIcon(div_icon_a378cea67d920b502acbac55f9b8d49e);
+            
+    
+            var marker_4dca47c6d5126dd568b9f4c1417b5ad8 = L.marker(
+                [39.46994531050937, -0.358688329939162],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_a8ec0bbcddf5de6982fd3daa937095c0 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(78, \u0027Arag\u00f3n - Vicente Sancho Tello\u0027, 39.46994531050937, -0.358688329939162)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_4dca47c6d5126dd568b9f4c1417b5ad8.bindTooltip(
+                `<div>
+                     Aragón - Vicente Sancho Tello
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4dca47c6d5126dd568b9f4c1417b5ad8.setIcon(div_icon_a8ec0bbcddf5de6982fd3daa937095c0);
+            
+    
+            var marker_5acdc08d4d756da16998414fcc65325d = L.marker(
+                [39.4727793187067, -0.357242322435451],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_e4b9a8f147ab30cfcdcf1e803b048792 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(79, \u0027Arag\u00f3n - Ernesto Ferrer\u0027, 39.4727793187067, -0.357242322435451)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_5acdc08d4d756da16998414fcc65325d.bindTooltip(
+                `<div>
+                     Aragón - Ernesto Ferrer
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5acdc08d4d756da16998414fcc65325d.setIcon(div_icon_e4b9a8f147ab30cfcdcf1e803b048792);
+            
+    
+            var marker_88bea746c409bf8a4f11ea717f206be8 = L.marker(
+                [39.47374232444908, -0.3622983394473602],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_e319eb14c8e14bea3ffbc70fbaa391ae = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(80, \u0027Amadeo de Saboya (frente Ayuntamiento)\u0027, 39.47374232444908, -0.3622983394473602)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_88bea746c409bf8a4f11ea717f206be8.bindTooltip(
+                `<div>
+                     Amadeo de Saboya (frente Ayuntamiento)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_88bea746c409bf8a4f11ea717f206be8.setIcon(div_icon_e319eb14c8e14bea3ffbc70fbaa391ae);
+            
+    
+            var marker_0dd62b420701dceafc1f29b911e021e2 = L.marker(
+                [39.47512832851177, -0.3609783335465967],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_9a3e298867b638f792e416ec4cb27d2c = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(81, \u0027Micer Masc\u00f3 - Rodriguez Fornos\u0027, 39.47512832851177, -0.3609783335465967)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_0dd62b420701dceafc1f29b911e021e2.bindTooltip(
+                `<div>
+                     Micer Mascó - Rodriguez Fornos
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0dd62b420701dceafc1f29b911e021e2.setIcon(div_icon_9a3e298867b638f792e416ec4cb27d2c);
+            
+    
+            var marker_097d2136270534d054851d259e3cfbaa = L.marker(
+                [39.47605634238628, -0.3839144104057024],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_0a1f9ca8c9671bbee78d4755c3be691f = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(82, \u0027Guillem de Castro (Torres de Quart)\u0027, 39.47605634238628, -0.3839144104057024)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_097d2136270534d054851d259e3cfbaa.bindTooltip(
+                `<div>
+                     Guillem de Castro (Torres de Quart)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_097d2136270534d054851d259e3cfbaa.setIcon(div_icon_0a1f9ca8c9671bbee78d4755c3be691f);
+            
+    
+            var marker_c463dbff5459b93c46789dfd13c63caa = L.marker(
+                [39.47758533929587, -0.3669703519914759],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_f9657e5730b4d6f59810ee2ba24db175 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(83, \u0027General Elio - Llano del Real\u0027, 39.47758533929587, -0.3669703519914759)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_c463dbff5459b93c46789dfd13c63caa.bindTooltip(
+                `<div>
+                     General Elio - Llano del Real
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c463dbff5459b93c46789dfd13c63caa.setIcon(div_icon_f9657e5730b4d6f59810ee2ba24db175);
+            
+    
+            var marker_d159fa287d81cc6db5a2b9fafa8abf27 = L.marker(
+                [39.46712309239452, -0.3352259768659084],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_5b7541df2c864355c57d33c750232f66 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(84, \u0027Serrer\u00eda, 67\u0027, 39.46712309239452, -0.3352259768659084)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_d159fa287d81cc6db5a2b9fafa8abf27.bindTooltip(
+                `<div>
+                     Serrería, 67
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d159fa287d81cc6db5a2b9fafa8abf27.setIcon(div_icon_5b7541df2c864355c57d33c750232f66);
+            
+    
+            var marker_e22b0d856ac4ce0e34051c8e364c6c38 = L.marker(
+                [39.479464345022826, -0.3647153422684407],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_6dac5bb9002f4b37ef3532b1c158d3a7 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(85, \u0027Blasco Iba\u00f1ez - Jaime Roig\u0027, 39.479464345022826, -0.3647153422684407)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_e22b0d856ac4ce0e34051c8e364c6c38.bindTooltip(
+                `<div>
+                     Blasco Ibañez - Jaime Roig
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e22b0d856ac4ce0e34051c8e364c6c38.setIcon(div_icon_6dac5bb9002f4b37ef3532b1c158d3a7);
+            
+    
+            var marker_7de3f3b3073e3ea198ea775b3d4d68a8 = L.marker(
+                [39.4552402764855, -0.3911934519157556],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_bbcfcb895ee4381147e858f9917aa28f = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(86, \u0027Gaspar Aguilar - Vicente Parra\u0027, 39.4552402764855, -0.3911934519157556)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_7de3f3b3073e3ea198ea775b3d4d68a8.bindTooltip(
+                `<div>
+                     Gaspar Aguilar - Vicente Parra
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7de3f3b3073e3ea198ea775b3d4d68a8.setIcon(div_icon_bbcfcb895ee4381147e858f9917aa28f);
+            
+    
+            var marker_cd150669aacd647c9d9a69e2910ee2c8 = L.marker(
+                [39.47851834019109, -0.3618803335785998],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_ef693cb2ba4ed0b23b42c2b6c4dc9b5c = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(87, \u0027Blasco Iba\u00f1ez - Doctor G\u00f3mez Ferrer (Cl\u00ednico)\u0027, 39.47851834019109, -0.3618803335785998)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_cd150669aacd647c9d9a69e2910ee2c8.bindTooltip(
+                `<div>
+                     Blasco Ibañez - Doctor Gómez Ferrer (Clínico)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cd150669aacd647c9d9a69e2910ee2c8.setIcon(div_icon_ef693cb2ba4ed0b23b42c2b6c4dc9b5c);
+            
+    
+            var marker_85ff0340daadc72cf94e616475b2085f = L.marker(
+                [39.47751233609685, -0.3611423324837735],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_8504df049e4abf52a94a8c48c2a893e2 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(88, \u0027Blasco Iba\u00f1ez, 28 (F. Geograf\u00eda e Historia)\u0027, 39.47751233609685, -0.3611423324837735)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_85ff0340daadc72cf94e616475b2085f.bindTooltip(
+                `<div>
+                     Blasco Ibañez, 28 (F. Geografía e Historia)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_85ff0340daadc72cf94e616475b2085f.setIcon(div_icon_8504df049e4abf52a94a8c48c2a893e2);
+            
+    
+            var marker_cd1c33d0ed20072839fd711bc65eadcb = L.marker(
+                [39.47780233689744, -0.3593183259089267],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_72de820623eb36677b5278f14c593149 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(89, \u0027Blasco Iba\u00f1ez, 23 (F. Filosof\u00eda y Psicolog\u00eda)\u0027, 39.47780233689744, -0.3593183259089267)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_cd1c33d0ed20072839fd711bc65eadcb.bindTooltip(
+                `<div>
+                     Blasco Ibañez, 23 (F. Filosofía y Psicología)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cd1c33d0ed20072839fd711bc65eadcb.setIcon(div_icon_72de820623eb36677b5278f14c593149);
+            
+    
+            var marker_e0310ab822f31608add99f2fcd25c306 = L.marker(
+                [39.47673433298103, -0.3589673254467337],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_41e9d5fd6d0b5dc5c7777e01e7d6e7c0 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(90, \u0027Blasco Iba\u00f1ez, 32 (F. Filolog\u00eda)\u0027, 39.47673433298103, -0.3589673254467337)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_e0310ab822f31608add99f2fcd25c306.bindTooltip(
+                `<div>
+                     Blasco Ibañez, 32 (F. Filología)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e0310ab822f31608add99f2fcd25c306.setIcon(div_icon_41e9d5fd6d0b5dc5c7777e01e7d6e7c0);
+            
+    
+            var marker_325fd57ae55b4433c746b5e109cbf5f1 = L.marker(
+                [39.44412522887422, -0.3675733796970313],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_472282df9d9617802dafa1c830201225 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(91, \u0027Grabador Jordan - Escultor Pastor\u0027, 39.44412522887422, -0.3675733796970313)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_325fd57ae55b4433c746b5e109cbf5f1.bindTooltip(
+                `<div>
+                     Grabador Jordan - Escultor Pastor
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_325fd57ae55b4433c746b5e109cbf5f1.setIcon(div_icon_472282df9d9617802dafa1c830201225);
+            
+    
+            var marker_4cc555faa800ae9e945851bc34d3ed09 = L.marker(
+                [39.47586032883543, -0.355968315835597],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_d8100984970413cdc1564608b3917cbc = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(92, \u0027Blasco Iba\u00f1ez - Arag\u00f3n\u0027, 39.47586032883543, -0.355968315835597)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_4cc555faa800ae9e945851bc34d3ed09.bindTooltip(
+                `<div>
+                     Blasco Ibañez - Aragón
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4cc555faa800ae9e945851bc34d3ed09.setIcon(div_icon_d8100984970413cdc1564608b3917cbc);
+            
+    
+            var marker_037b5d4981e3beb08b0d2773689090e4 = L.marker(
+                [39.47228231067077, -0.343809277423822],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_252365af267c78135ce757ec4c6896e0 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(93, \u0027Blasco Iba\u00f1ez - Poeta Dur\u00e1n Tortajada\u0027, 39.47228231067077, -0.343809277423822)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_037b5d4981e3beb08b0d2773689090e4.bindTooltip(
+                `<div>
+                     Blasco Ibañez - Poeta Durán Tortajada
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_037b5d4981e3beb08b0d2773689090e4.setIcon(div_icon_252365af267c78135ce757ec4c6896e0);
+            
+    
+            var marker_8b716ca6588ad1065ae65765005ffb9b = L.marker(
+                [39.47537832465668, -0.3515833014492605],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_08b6567e43d4da1d09bfa8bd87341847 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(94, \u0027Blasco Iba\u00f1ez - Clariano\u0027, 39.47537832465668, -0.3515833014492605)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_8b716ca6588ad1065ae65765005ffb9b.bindTooltip(
+                `<div>
+                     Blasco Ibañez - Clariano
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8b716ca6588ad1065ae65765005ffb9b.setIcon(div_icon_08b6567e43d4da1d09bfa8bd87341847);
+            
+    
+            var marker_716802b76fa42c088a10a519ed0876a9 = L.marker(
+                [39.47983533734356, -0.3461192793966847],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_56f20766d9d0ac8370ab0272385652fc = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(95, \u0027Naranjos (Magisterio)\u0027, 39.47983533734356, -0.3461192793966847)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_716802b76fa42c088a10a519ed0876a9.bindTooltip(
+                `<div>
+                     Naranjos (Magisterio)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_716802b76fa42c088a10a519ed0876a9.setIcon(div_icon_56f20766d9d0ac8370ab0272385652fc);
+            
+    
+            var marker_d186e766582f9df1eb423c50c7a5dfa9 = L.marker(
+                [39.47355431688417, -0.3482142912637639],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_7033bed9ab23e56c8efb4166bf1729c1 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(96, \u0027Blasco Iba\u00f1ez - Yecla\u0027, 39.47355431688417, -0.3482142912637639)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_d186e766582f9df1eb423c50c7a5dfa9.bindTooltip(
+                `<div>
+                     Blasco Ibañez - Yecla
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d186e766582f9df1eb423c50c7a5dfa9.setIcon(div_icon_7033bed9ab23e56c8efb4166bf1729c1);
+            
+    
+            var marker_c8fce41f93670b675a436cb9528fea08 = L.marker(
+                [39.47306831276613, -0.3431322739648798],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_6fddaa6ea7987f221f7b06b9cb15be32 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(97, \u0027Blasco Iba\u00f1ez 121\u0027, 39.47306831276613, -0.3431322739648798)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_c8fce41f93670b675a436cb9528fea08.bindTooltip(
+                `<div>
+                     Blasco Ibañez 121
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c8fce41f93670b675a436cb9528fea08.setIcon(div_icon_6fddaa6ea7987f221f7b06b9cb15be32);
+            
+    
+            var marker_2b2385c4e995801b8d1e0c15570adfce = L.marker(
+                [39.469680303996114, -0.348442294427372],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_c5453ec81a6e3183e73a8215732ed536 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(98, \u0027Justo y Pastor - Duque de Gaeta\u0027, 39.469680303996114, -0.348442294427372)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_2b2385c4e995801b8d1e0c15570adfce.bindTooltip(
+                `<div>
+                     Justo y Pastor - Duque de Gaeta
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2b2385c4e995801b8d1e0c15570adfce.setIcon(div_icon_c5453ec81a6e3183e73a8215732ed536);
+            
+    
+            var marker_b1bc4a6d94b36d055535d20c36de5def = L.marker(
+                [39.47134430635022, -0.3404842660990001],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_e10a96048a1557c6fc0bdf49e5bc2d16 = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(99, \u0027Blasco Iba\u00f1ez 166 - Pintor Jos\u00e9 Mongrell\u0027, 39.47134430635022, -0.3404842660990001)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_b1bc4a6d94b36d055535d20c36de5def.bindTooltip(
+                `<div>
+                     Blasco Ibañez 166 - Pintor José Mongrell
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b1bc4a6d94b36d055535d20c36de5def.setIcon(div_icon_e10a96048a1557c6fc0bdf49e5bc2d16);
+            
+    
+            var marker_0539a964c2a9cf2f87540ab781ca1112 = L.marker(
+                [39.47163430564687, -0.3381502585344567],
+                {
+}
+            ).addTo(map_87116a1fc202a576a2b9619cdc9ea24c);
+        
+    
+            var div_icon_dc10c52f5afbc7a0b9b22fc9890ee3fa = L.divIcon({
+  "html": "\n            \u003cdiv onclick=\"openPanel(100, \u0027Blasco Iba\u00f1ez - Mestre Ripoll\u0027, 39.47163430564687, -0.3381502585344567)\" style=\"cursor: pointer;\"\u003e\n                \u003ci class=\"fa fa-map-marker fa-3x\" style=\"color: blue;\"\u003e\u003c/i\u003e\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_0539a964c2a9cf2f87540ab781ca1112.bindTooltip(
+                `<div>
+                     Blasco Ibañez - Mestre Ripoll
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0539a964c2a9cf2f87540ab781ca1112.setIcon(div_icon_dc10c52f5afbc7a0b9b22fc9890ee3fa);
+            
+</script>
+</html>
