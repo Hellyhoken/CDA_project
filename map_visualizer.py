@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 import pandas as pd
 import json
 import folium
 import os
+from prediction_module import get_predictions_for_all_stations
 
 
 def load_data(file_path):
@@ -40,11 +42,29 @@ def load_data(file_path):
         raise ValueError("File must be either .csv or .json")
 
 
-def create_map(data, output_file='map.html'):
+def load_station_totals(agg_csv_path='agg.csv'):
+    """Load total bike capacity for each station from aggregated data."""
+    try:
+        df = pd.read_csv(agg_csv_path)
+        # Get the most recent total for each station
+        station_totals = df.groupby('number')['total'].last().to_dict()
+        return station_totals
+    except Exception as e:
+        print(f"Error loading station totals: {e}")
+        return {}
+
+
+def create_map(data, predictions=None, station_totals=None, output_file='map.html'):
     """Create a folium map with all the points."""
     if not data:
         print("No data to display")
         return
+    
+    if predictions is None:
+        predictions = {}
+    
+    if station_totals is None:
+        station_totals = {}
     
     # Calculate the center of the map (average of all coordinates)
     avg_lat = sum(point['lat'] for point in data) / len(data)
@@ -52,6 +72,11 @@ def create_map(data, output_file='map.html'):
     
     # Create the map centered on the average coordinates
     m = folium.Map(location=[avg_lat, avg_lon], zoom_start=13)
+    
+    # Prepare JSON data
+    all_stations_json = json.dumps(data)
+    predictions_json = json.dumps(predictions)
+    station_totals_json = json.dumps(station_totals)
     
     # Add custom CSS and JavaScript for the side panel and pin controls
     custom_html = """
@@ -118,6 +143,84 @@ def create_map(data, output_file='map.html'):
             text-align: center;
             color: #6c757d;
             margin-top: 10px;
+        }
+        
+        /* Prediction histogram styles */
+        .prediction-chart {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .chart-title {
+            margin: 0;
+            color: #333;
+            font-size: 15px;
+        }
+        .chart-total {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .chart-svg {
+            width: 100%;
+            height: 200px;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+        }
+        .bar-container {
+            margin-bottom: 15px;
+        }
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #333;
+        }
+        .bar-label-time {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .bar-label-value {
+            color: #666;
+        }
+        .bar-background {
+            width: 100%;
+            height: 30px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745 0%, #ffc107 50%, #dc3545 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .bar-bikes {
+            margin-top: 3px;
+            font-size: 12px;
+            color: #666;
         }
         
         /* Pin Control Panel */
@@ -232,7 +335,7 @@ def create_map(data, output_file='map.html'):
             
             <div class="info-section">
                 <div class="info-label">Bike Availability Predictions:</div>
-                <div class="prediction-placeholder">
+                <div id="predictions-content" class="prediction-placeholder">
                     <p><strong>Predictions Coming Soon</strong></p>
                     <p style="font-size: 14px; margin-top: 10px;">
                         Future predictions for bike availability will be displayed here.
@@ -242,13 +345,17 @@ def create_map(data, output_file='map.html'):
         </div>
     </div>
     <script>
-        var allStations = """ + json.dumps(data) + """;
+        var allStations = """ + all_stations_json + """;
+        var stationPredictions = """ + predictions_json + """;
+        var stationTotals = """ + station_totals_json + """;
         var mapInstance = null;
         var pinMode = null; // 'start' or 'end'
         var startMarker = null;
         var endMarker = null;
         var startCoords = null;
         var endCoords = null;
+        var highlightedMarker = null;
+        var stationMarkers = {};
         
         function setMap(map) {
             mapInstance = map;
@@ -368,13 +475,124 @@ def create_map(data, output_file='map.html'):
         }
         
         function openPanel(stationNumber, address, lat, lon) {
+            // Remove previous highlight
+            if (highlightedMarker) {
+                mapInstance.removeLayer(highlightedMarker);
+                highlightedMarker = null;
+            }
+            
+            // Add highlight circle around clicked station
+            highlightedMarker = L.circle([lat, lon], {
+                color: '#007bff',
+                fillColor: '#007bff',
+                fillOpacity: 0.2,
+                radius: 50,
+                weight: 3
+            }).addTo(mapInstance);
+            
             document.getElementById('station-number').textContent = stationNumber;
             document.getElementById('station-address').textContent = address;
             document.getElementById('station-coords').textContent = lat.toFixed(6) + ', ' + lon.toFixed(6);
+            
+            // Display predictions if available
+            var predictionsDiv = document.getElementById('predictions-content');
+            if (stationPredictions[stationNumber] && stationPredictions[stationNumber].length > 0) {
+                var preds = stationPredictions[stationNumber];
+                
+                // Get total bikes from station data
+                var totalBikes = stationTotals[stationNumber] || 'N/A';
+                
+                var html = '<div class="prediction-chart">';
+                html += '<div class="chart-header">';
+                html += '<h4 class="chart-title">24-Hour Availability Forecast</h4>';
+                html += '<div class="chart-total">🚲 Total: ' + totalBikes + '</div>';
+                html += '</div>';
+                
+                // Create SVG chart
+                var svgWidth = 350;
+                var svgHeight = 200;
+                var padding = 30;
+                var chartWidth = svgWidth - 2 * padding;
+                var chartHeight = svgHeight - 2 * padding;
+                
+                html += '<svg class="chart-svg" viewBox="0 0 ' + svgWidth + ' ' + svgHeight + '">';
+                
+                // Draw axes
+                html += '<line x1="' + padding + '" y1="' + (svgHeight - padding) + '" x2="' + (svgWidth - padding) + '" y2="' + (svgHeight - padding) + '" stroke="#999" stroke-width="1"/>';
+                html += '<line x1="' + padding + '" y1="' + padding + '" x2="' + padding + '" y2="' + (svgHeight - padding) + '" stroke="#999" stroke-width="1"/>';
+                
+                // Calculate Y-axis bike counts (0, 50%, 100% of total)
+                var bikesAtZero = 0;
+                var bikesAtMid = Math.round(totalBikes / 2);
+                var bikesAtTop = totalBikes;
+                
+                // Draw horizontal grid lines and Y-axis labels
+                html += '<line x1="' + padding + '" y1="' + (svgHeight - padding) + '" x2="' + (svgWidth - padding) + '" y2="' + (svgHeight - padding) + '" stroke="#e0e0e0" stroke-width="1"/>';
+                html += '<text x="' + (padding - 5) + '" y="' + (svgHeight - padding + 5) + '" text-anchor="end" font-size="10" fill="#666">' + bikesAtZero + '</text>';
+                
+                html += '<line x1="' + padding + '" y1="' + (padding + chartHeight/2) + '" x2="' + (svgWidth - padding) + '" y2="' + (padding + chartHeight/2) + '" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="2,2"/>';
+                html += '<text x="' + (padding - 5) + '" y="' + (padding + chartHeight/2 + 5) + '" text-anchor="end" font-size="10" fill="#666">' + bikesAtMid + '</text>';
+                
+                html += '<line x1="' + padding + '" y1="' + padding + '" x2="' + (svgWidth - padding) + '" y2="' + padding + '" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="2,2"/>';
+                html += '<text x="' + (padding - 5) + '" y="' + (padding + 5) + '" text-anchor="end" font-size="10" fill="#666">' + bikesAtTop + '</text>';
+                
+                // Build path for area chart
+                var points = [];
+                preds.forEach(function(pred, idx) {
+                    var x = padding + (idx / (preds.length - 1)) * chartWidth;
+                    var ratio = pred.predicted_ratio;
+                    var y = (svgHeight - padding) - (ratio * chartHeight);
+                    points.push({x: x, y: y, ratio: ratio, hour: pred.hour, bikes: pred.predicted_bikes});
+                });
+                
+                // Create area path (filled)
+                var areaPath = 'M ' + padding + ' ' + (svgHeight - padding);
+                points.forEach(function(p) {
+                    areaPath += ' L ' + p.x + ' ' + p.y;
+                });
+                areaPath += ' L ' + (svgWidth - padding) + ' ' + (svgHeight - padding) + ' Z';
+                html += '<path d="' + areaPath + '" fill="rgba(0, 123, 255, 0.2)" stroke="none"/>';
+                
+                // Create line path
+                var linePath = 'M';
+                points.forEach(function(p, idx) {
+                    linePath += (idx > 0 ? ' L ' : ' ') + p.x + ' ' + p.y;
+                });
+                html += '<path d="' + linePath + '" fill="none" stroke="#007bff" stroke-width="2"/>';
+                
+                // Add points with hover info
+                points.forEach(function(p) {
+                    var color = p.ratio < 0.3 ? '#dc3545' : (p.ratio < 0.7 ? '#ffc107' : '#28a745');
+                    html += '<circle cx="' + p.x + '" cy="' + p.y + '" r="3" fill="' + color + '" stroke="white" stroke-width="1">';
+                    html += '<title>+' + p.hour + 'h: ' + (p.ratio * 100).toFixed(1) + '% (' + p.bikes + ' bikes)</title>';
+                    html += '</circle>';
+                });
+                
+                // X-axis labels (every 4 hours)
+                for (var i = 0; i < preds.length; i += 4) {
+                    var x = padding + (i / (preds.length - 1)) * chartWidth;
+                    html += '<text x="' + x + '" y="' + (svgHeight - padding + 15) + '" text-anchor="middle" font-size="9" fill="#666">+' + preds[i].hour + 'h</text>';
+                }
+                
+                html += '</svg>';
+                html += '</div>';
+                predictionsDiv.innerHTML = html;
+                predictionsDiv.style.backgroundColor = 'transparent';
+                predictionsDiv.style.border = 'none';
+                predictionsDiv.style.padding = '0';
+            } else {
+                predictionsDiv.innerHTML = '<p><strong>No predictions available</strong></p><p style="font-size: 14px; margin-top: 10px;">Predictions could not be generated for this station.</p>';
+            }
+            
             document.getElementById('side-panel').classList.add('open');
         }
         
         function closePanel() {
+            // Remove highlight when closing panel
+            if (highlightedMarker) {
+                mapInstance.removeLayer(highlightedMarker);
+                highlightedMarker = null;
+            }
             document.getElementById('side-panel').classList.remove('open');
         }
         
@@ -464,23 +682,40 @@ def create_map(data, output_file='map.html'):
     
     m.get_root().html.add_child(folium.Element(custom_html))
     
+    # Add JavaScript to create markers after map initialization
+    markers_js = "<script>\n"
+    markers_js += "setTimeout(function() {\n"
+    markers_js += "    var map = window[Object.keys(window).find(key => window[key] && window[key]._layers)];\n"
+    markers_js += "    if (!map) return;\n"
+    
     # Add markers for each point
     for point in data:
-        # Create JavaScript function call for onclick
-        onclick_js = f"openPanel({point['number']}, '{point['address'].replace("'", "\\'")}', {point['lat']}, {point['lon']})"
+        # Escape address for JavaScript
+        address_escaped = point['address'].replace("\\", "\\\\").replace("'", "\\'").replace('"', '\\"').replace("\n", " ")
+        num = point['number']
+        lat = point['lat']
+        lon = point['lon']
         
-        # Create custom icon with onclick event
-        icon_html = f'''
-            <div onclick="{onclick_js}" style="cursor: pointer;">
-                <i class="fa fa-map-marker fa-3x" style="color: blue;"></i>
-            </div>
-        '''
-        
-        folium.Marker(
-            location=[point['lat'], point['lon']],
-            tooltip=point['address'],
-            icon=folium.DivIcon(html=icon_html)
-        ).add_to(m)
+        markers_js += f"""
+    var marker_{num} = L.marker([{lat}, {lon}], {{
+        icon: L.icon({{
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        }})
+    }}).addTo(map);
+    marker_{num}.bindTooltip('{address_escaped}');
+    marker_{num}.on('click', function() {{
+        openPanel({num}, '{address_escaped}', {lat}, {lon});
+    }});
+"""
+    
+    markers_js += "}, 500);\n</script>"
+    
+    m.get_root().html.add_child(folium.Element(markers_js))
     
     # Save the map
     m.save(output_file)
@@ -514,8 +749,26 @@ def main():
     
     print(f"Successfully loaded {len(data)} points from {loaded_file}")
     
+    # Load station totals
+    print("Loading station totals...")
+    station_totals = load_station_totals('agg.csv')
+    print(f"Loaded totals for {len(station_totals)} stations")
+    
+    # Load predictions
+    print("Loading predictions from model...")
+    try:
+        predictions = get_predictions_for_all_stations(
+            agg_csv_path='agg.csv',
+            model_path='gru_bike_prediction_model.pt',
+            prediction_hours=24
+        )
+        print(f"Loaded predictions for {len(predictions)} stations")
+    except Exception as e:
+        print(f"Error loading predictions: {e}")
+        predictions = {}
+    
     # Create and save the map
-    create_map(data)
+    create_map(data, predictions, station_totals)
 
 
 if __name__ == "__main__":
