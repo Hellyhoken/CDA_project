@@ -46,7 +46,6 @@ def load_station_totals(agg_csv_path='agg.csv'):
     """Load total bike capacity for each station from aggregated data."""
     try:
         df = pd.read_csv(agg_csv_path)
-        # Get the most recent total for each station
         station_totals = df.groupby('number')['total'].last().to_dict()
         return station_totals
     except Exception as e:
@@ -54,7 +53,31 @@ def load_station_totals(agg_csv_path='agg.csv'):
         return {}
 
 
-def create_map(data, predictions=None, station_totals=None, output_file='map.html'):
+def load_current_ratios(agg_csv_path='agg.csv'):
+    """Load latest availability ratio for each station."""
+    try:
+        df = pd.read_csv(agg_csv_path)
+        if 'updated_at' in df.columns:
+            df['updated_at'] = pd.to_datetime(df['updated_at'], errors='coerce')
+            df = df.sort_values(['number', 'updated_at'])
+        ratios = df.groupby('number')['available_to_total_ratio'].last().to_dict()
+        # Coerce to float and clamp between 0 and 1
+        cleaned = {}
+        for k, v in ratios.items():
+            try:
+                f = float(v)
+            except Exception:
+                f = 0.0
+            if f < 0: f = 0.0
+            if f > 1: f = 1.0
+            cleaned[int(k)] = f
+        return cleaned
+    except Exception as e:
+        print(f"Error loading current ratios: {e}")
+        return {}
+
+
+def create_map(data, predictions=None, station_totals=None, station_current_ratios=None, output_file='map.html'):
     """Create a folium map with all the points."""
     if not data:
         print("No data to display")
@@ -65,6 +88,8 @@ def create_map(data, predictions=None, station_totals=None, output_file='map.htm
     
     if station_totals is None:
         station_totals = {}
+    if station_current_ratios is None:
+        station_current_ratios = {}
     
     # Calculate the center of the map (average of all coordinates)
     avg_lat = sum(point['lat'] for point in data) / len(data)
@@ -77,6 +102,7 @@ def create_map(data, predictions=None, station_totals=None, output_file='map.htm
     all_stations_json = json.dumps(data)
     predictions_json = json.dumps(predictions)
     station_totals_json = json.dumps(station_totals)
+    station_current_ratios_json = json.dumps(station_current_ratios)
     
     # Add custom CSS and JavaScript for the side panel and pin controls
     custom_html = """
@@ -348,6 +374,7 @@ def create_map(data, predictions=None, station_totals=None, output_file='map.htm
         var allStations = """ + all_stations_json + """;
         var stationPredictions = """ + predictions_json + """;
         var stationTotals = """ + station_totals_json + """;
+        var stationCurrentRatios = """ + station_current_ratios_json + """;
         var mapInstance = null;
         var pinMode = null; // 'start' or 'end'
         var startMarker = null;
@@ -537,9 +564,18 @@ def create_map(data, predictions=None, station_totals=None, output_file='map.htm
                 html += '<text x="' + (padding - 5) + '" y="' + (padding + 5) + '" text-anchor="end" font-size="10" fill="#666">' + bikesAtTop + '</text>';
                 
                 // Build path for area chart
+                // Build combined series with current ratio baseline if available
+                var combined = [];
+                var currentRatio = stationCurrentRatios[stationNumber];
+                if (currentRatio !== undefined) {
+                    var currentBikes = (totalBikes && !isNaN(totalBikes)) ? Math.round(currentRatio * totalBikes) : null;
+                    combined.push({hour: 0, predicted_ratio: currentRatio, predicted_bikes: currentBikes});
+                }
+                preds.forEach(function(p) { combined.push(p); });
+
                 var points = [];
-                preds.forEach(function(pred, idx) {
-                    var x = padding + (idx / (preds.length - 1)) * chartWidth;
+                combined.forEach(function(pred, idx) {
+                    var x = padding + (idx / (combined.length - 1)) * chartWidth;
                     var ratio = pred.predicted_ratio;
                     var y = (svgHeight - padding) - (ratio * chartHeight);
                     points.push({x: x, y: y, ratio: ratio, hour: pred.hour, bikes: pred.predicted_bikes});
@@ -568,10 +604,10 @@ def create_map(data, predictions=None, station_totals=None, output_file='map.htm
                     html += '</circle>';
                 });
                 
-                // X-axis labels (every 4 hours)
-                for (var i = 0; i < preds.length; i += 4) {
-                    var x = padding + (i / (preds.length - 1)) * chartWidth;
-                    html += '<text x="' + x + '" y="' + (svgHeight - padding + 15) + '" text-anchor="middle" font-size="9" fill="#666">+' + preds[i].hour + 'h</text>';
+                // X-axis labels (every 4 hours, include 0h if present)
+                for (var i = 0; i < combined.length; i += 4) {
+                    var x = padding + (i / (combined.length - 1)) * chartWidth;
+                    html += '<text x="' + x + '" y="' + (svgHeight - padding + 15) + '" text-anchor="middle" font-size="9" fill="#666">+' + combined[i].hour + 'h</text>';
                 }
                 
                 html += '</svg>';
@@ -638,6 +674,64 @@ def create_map(data, predictions=None, station_totals=None, output_file='map.htm
             }).sort(function(a, b) {
                 return a.distance - b.distance;
             }).slice(0, 3);
+
+            try {
+                console.log('[RoutePlanner] Nearest start stations:', startStations.map(s => ({n: s.station.number, dKm: s.distance})));
+                console.log('[RoutePlanner] Nearest end stations:', endStations.map(s => ({n: s.station.number, dKm: s.distance})));
+            } catch (e) { console.warn('[RoutePlanner] logging nearest stations failed', e); }
+
+            // Build payload with predictions and totals for selected stations
+            function enrich(list) {
+                return list.map(function(item) {
+                    var s = item.station;
+                    var preds = stationPredictions[s.number] || [];
+                    var curRatio = stationCurrentRatios[s.number];
+                    return {
+                        number: s.number,
+                        address: s.address,
+                        lat: s.lat,
+                        lon: s.lon,
+                        distanceKm: item.distance, // already in km
+                        total: stationTotals[s.number] || 0,
+                        currentRatio: (curRatio !== undefined ? curRatio : null),
+                        predictions: preds.map(function(p) {
+                            return {
+                                hour: p.hour,
+                                ratio: p.predicted_ratio,
+                                bikes: p.predicted_bikes
+                            };
+                        })
+                    };
+                });
+            }
+
+            var payload = {
+                start: {
+                    coords: startCoords,
+                    stations: enrich(startStations)
+                },
+                end: {
+                    coords: endCoords,
+                    stations: enrich(endStations)
+                }
+            };
+
+            try {
+                console.log('[RoutePlanner] Payload stations (start):', payload.start.stations.map(s => ({n: s.number, total: s.total, preds: s.predictions.length})));
+                console.log('[RoutePlanner] Payload stations (end):', payload.end.stations.map(s => ({n: s.number, total: s.total, preds: s.predictions.length})));
+                sessionStorage.setItem('route_planner_payload', JSON.stringify(payload));
+                console.log('[RoutePlanner] Stored payload in sessionStorage (bytes):', JSON.stringify(payload).length);
+            } catch (e) {
+                console.warn('[RoutePlanner] Could not store payload in sessionStorage', e);
+            }
+
+            // Fallback: store in window.name to survive navigation even across file:// quirks
+            try {
+                window.name = 'ROUTE_PAYLOAD:' + JSON.stringify(payload);
+                console.log('[RoutePlanner] Stored payload in window.name (length):', window.name.length);
+            } catch (e) {
+                console.warn('[RoutePlanner] Could not write window.name payload', e);
+            }
             
             // Build URL with parameters
             var params = new URLSearchParams();
@@ -645,10 +739,17 @@ def create_map(data, predictions=None, station_totals=None, output_file='map.htm
             params.set('start_lng', startCoords.lng);
             params.set('end_lat', endCoords.lat);
             params.set('end_lng', endCoords.lng);
-            params.set('start_stations', JSON.stringify(startStations));
-            params.set('end_stations', JSON.stringify(endStations));
+            // Keep lightweight station metadata in URL for fallback only
+            try {
+                params.set('start_stations', JSON.stringify(startStations));
+                params.set('end_stations', JSON.stringify(endStations));
+            } catch (e) {
+                // If URL length becomes an issue, these can be omitted
+            }
+            params.set('use_session', '1');
             
             // Navigate to route planner page
+            console.log('[RoutePlanner] Navigating to route_planner.html with params size:', params.toString().length);
             window.location.href = 'route_planner.html?' + params.toString();
         }
         
@@ -767,8 +868,13 @@ def main():
         print(f"Error loading predictions: {e}")
         predictions = {}
     
+    # Load current ratios
+    print("Loading current ratios...")
+    current_ratios = load_current_ratios('agg.csv')
+    print(f"Loaded current ratios for {len(current_ratios)} stations")
+
     # Create and save the map
-    create_map(data, predictions, station_totals)
+    create_map(data, predictions, station_totals, current_ratios)
 
 
 if __name__ == "__main__":

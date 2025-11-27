@@ -95,7 +95,7 @@
             padding: 15px;
             margin-bottom: 10px;
             border-radius: 5px;
-            border-left: 3px solid #007bff;
+            border-left: 6px solid #007bff;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         
@@ -149,6 +149,75 @@
             color: #999;
             font-size: 18px;
         }
+
+        /* Mini chart styles */
+        .mini-chart {
+            margin: 10px 0;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            text-align: left;
+        }
+        .mini-chart-title {
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 14px;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        /* Combined chart styles */
+        .combined-section {
+            margin-top: 30px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+        .combined-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 14px;
+            margin-top: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border: 1px solid #eee;
+            border-radius: 16px;
+            background: #fafafa;
+            font-size: 13px;
+        }
+        .legend-swatch {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+        }
+        .color-dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -168,12 +237,7 @@
                 </div>
                 <div class="predictions-section">
                     <h3>Bike Availability Predictions</h3>
-                    <div class="predictions-placeholder">
-                        <p><strong>Predictions Coming Soon</strong></p>
-                        <p style="font-size: 14px; margin-top: 10px;">
-                            Predicted bike availability at start stations will be displayed here.
-                        </p>
-                    </div>
+                    <div id="start-predictions" class="charts-grid"></div>
                 </div>
             </div>
             
@@ -186,18 +250,60 @@
                 </div>
                 <div class="predictions-section">
                     <h3>Dock Availability Predictions</h3>
-                    <div class="predictions-placeholder">
-                        <p><strong>Predictions Coming Soon</strong></p>
-                        <p style="font-size: 14px; margin-top: 10px;">
-                            Predicted dock availability at end stations will be displayed here.
-                        </p>
-                    </div>
+                    <div id="end-predictions" class="charts-grid"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    
     
     <script>
+        // Keep last payload to support responsive re-render on resize
+        let __routePayload = null;
+        console.log('[Planner] Page load start');
+        // Try to load payload from sessionStorage (preferred)
+        let payload = null;
+        try {
+            const raw = sessionStorage.getItem('route_planner_payload');
+            console.log('[Planner] sessionStorage length:', raw ? raw.length : 0);
+            if (raw) {
+                payload = JSON.parse(raw);
+                console.log('[Planner] Parsed payload summary:', {
+                    hasStart: !!(payload && payload.start),
+                    hasEnd: !!(payload && payload.end),
+                    startStations: payload?.start?.stations?.length || 0,
+                    endStations: payload?.end?.stations?.length || 0
+                });
+            } else {
+                console.warn('[Planner] No payload found in sessionStorage');
+            }
+        } catch (e) {
+            console.warn('[Planner] No session payload or parse error', e);
+        }
+
+        // Fallback: try window.name when session payload is missing
+        if (!payload) {
+            try {
+                if (window.name && window.name.startsWith('ROUTE_PAYLOAD:')) {
+                    const json = window.name.slice('ROUTE_PAYLOAD:'.length);
+                    payload = JSON.parse(json);
+                    console.log('[Planner] Loaded payload from window.name', {
+                        startStations: payload?.start?.stations?.length || 0,
+                        endStations: payload?.end?.stations?.length || 0
+                    });
+                    // Optional: persist for refreshes
+                    try {
+                        sessionStorage.setItem('route_planner_payload', JSON.stringify(payload));
+                    } catch {}
+                } else {
+                    console.warn('[Planner] window.name not set or unexpected format');
+                }
+            } catch (e) {
+                console.warn('[Planner] Failed to parse payload from window.name', e);
+            }
+        }
+
         // Parse URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const startLat = parseFloat(urlParams.get('start_lat'));
@@ -206,6 +312,11 @@
         const endLng = parseFloat(urlParams.get('end_lng'));
         const startStations = JSON.parse(urlParams.get('start_stations') || '[]');
         const endStations = JSON.parse(urlParams.get('end_stations') || '[]');
+        console.log('[Planner] URL params:', {
+            startLat, startLng, endLat, endLng,
+            startStationsCount: startStations.length,
+            endStationsCount: endStations.length
+        });
         
         // Display coordinates
         document.getElementById('start-coords').textContent = 
@@ -213,35 +324,263 @@
         document.getElementById('end-coords').textContent = 
             `Coordinates: ${endLat.toFixed(6)}, ${endLng.toFixed(6)}`;
         
-        // Display start stations
-        const startStationsHTML = startStations.map((item, index) => {
-            const station = item.station;
-            const distance = item.distance;
-            return `
-                <div class="station-item">
-                    <div class="station-number">Station ${station.number}</div>
-                    <div class="station-address">${station.address}</div>
-                    <div class="station-distance">📍 ${(distance * 1000).toFixed(0)} meters away</div>
-                    <div class="station-coords">Coordinates: ${station.lat.toFixed(6)}, ${station.lon.toFixed(6)}</div>
-                </div>
-            `;
-        }).join('');
-        document.getElementById('start-stations').innerHTML = startStationsHTML;
-        
-        // Display end stations
-        const endStationsHTML = endStations.map((item, index) => {
-            const station = item.station;
-            const distance = item.distance;
-            return `
-                <div class="station-item">
-                    <div class="station-number">Station ${station.number}</div>
-                    <div class="station-address">${station.address}</div>
-                    <div class="station-distance">📍 ${(distance * 1000).toFixed(0)} meters away</div>
-                    <div class="station-coords">Coordinates: ${station.lat.toFixed(6)}, ${station.lon.toFixed(6)}</div>
-                </div>
-            `;
-        }).join('');
-        document.getElementById('end-stations').innerHTML = endStationsHTML;
+        // Helpers to render a compact SVG chart (similar styling to map page)
+        function renderMiniChart(container, item) {
+            const width = 360, height = 140, padding = 26;
+            const total = item.total || 0;
+            const preds = item.predictions || [];
+            if (!preds.length) {
+                console.warn('[Planner] No predictions for station', item.number, item.address);
+                return;
+            }
+            const chartWidth = width - padding*2;
+            const chartHeight = height - padding*2;
+            const values = preds.map(p => {
+                const bikes = (p.bikes != null) ? p.bikes : Math.round((p.ratio || 0) * total);
+                return Math.max(0, Math.min(total || bikes, bikes));
+            });
+            console.log('[Planner] Render chart station', item.number, {
+                total,
+                preds: preds.length,
+                min: Math.min.apply(null, values),
+                max: Math.max.apply(null, values)
+            });
+            const pts = values.map((v,i) => {
+                const x = padding + (i/(values.length-1))*chartWidth;
+                const y = (height - padding) - ((total ? v/total : 0)*chartHeight);
+                return `${x},${y}`;
+            }).join(' ');
+            const area = `M ${padding},${height-padding} L ${pts} L ${width-padding},${height-padding} Z`;
+            const path = `M ${pts.split(' ').join(' L ')}`;
+            const half = total ? Math.round(total/2) : 0;
+            const div = document.createElement('div');
+            div.className = 'mini-chart';
+            div.innerHTML = `
+                <div class="mini-chart-title">${item.address} · ${(item.distanceKm*1000).toFixed(0)} m · Total: ${total}</div>
+                <svg width="${width}" height="${height}">
+                  <rect x="${padding}" y="${padding}" width="${chartWidth}" height="${chartHeight}" fill="#fff" stroke="#eee" />
+                  <path d="${area}" fill="rgba(0,123,255,0.18)" />
+                  <path d="${path}" fill="none" stroke="#007bff" stroke-width="2" />
+                  <line x1="${padding}" y1="${padding}" x2="${width-padding}" y2="${padding}" stroke="#bbb" stroke-dasharray="4 3" />
+                  <line x1="${padding}" y1="${padding + chartHeight/2}" x2="${width-padding}" y2="${padding + chartHeight/2}" stroke="#ddd" stroke-dasharray="4 3" />
+                  <text x="${width-padding}" y="${padding-4}" text-anchor="end" font-size="10" fill="#555">${total}</text>
+                  <text x="${width-padding}" y="${padding + chartHeight/2 - 4}" text-anchor="end" font-size="10" fill="#555">${half}</text>
+                </svg>`;
+            container.appendChild(div);
+        }
+
+        function renderStationsList(containerId, items, colors) {
+            const html = items.map((item, idx) => {
+                const color = (colors && colors[idx]) ? colors[idx] : '#007bff';
+                return `
+                    <div class="station-item" style="border-left-color: ${color};">
+                        <div class="station-number"><span class="color-dot" style="background:${color}"></span>Station ${item.number}</div>
+                        <div class="station-address">${item.address}</div>
+                        <div class="station-distance">📍 ${(item.distanceKm*1000).toFixed(0)} meters away</div>
+                        <div class="station-coords">Coordinates: ${item.lat.toFixed(6)}, ${item.lon.toFixed(6)}</div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById(containerId).innerHTML = html;
+        }
+
+        function getPalette(role, count) {
+            // High-contrast, distinct palettes
+            const start = ['#1F77B4', '#FF7F0E', '#2CA02C']; // blue, orange, green
+            const end = ['#D62728', '#9467BD', '#8C564B'];   // red, purple, brown
+            const base = role === 'end' ? end : start;
+            const out = [];
+            for (let i = 0; i < count; i++) out.push(base[i] || base[base.length - 1]);
+            return out;
+        }
+
+        function renderFromPayload(data) {
+            console.log('[Planner] Rendering from payload');
+            __routePayload = data;
+            // Update coords (prefer payload if present)
+            document.getElementById('start-coords').textContent = `Coordinates: ${data.start.coords.lat.toFixed(6)}, ${data.start.coords.lng.toFixed(6)}`;
+            document.getElementById('end-coords').textContent = `Coordinates: ${data.end.coords.lat.toFixed(6)}, ${data.end.coords.lng.toFixed(6)}`;
+            const startSel = (data.start?.stations || []).slice(0,3);
+            const endSel = (data.end?.stations || []).slice(0,3);
+            const startColors = getPalette('start', startSel.length);
+            const endColors = getPalette('end', endSel.length);
+            renderStationsList('start-stations', startSel, startColors);
+            renderStationsList('end-stations', endSel, endColors);
+            // Render combined charts in their original positions
+            renderCombinedInto('start-predictions', startSel, 'start', startColors);
+            renderCombinedInto('end-predictions', endSel, 'end', endColors);
+            console.log('[Planner] Completed rendering start/end combined charts');
+        }
+        function renderCombinedInto(containerId, stations, role, colors) {
+            const container = document.getElementById(containerId);
+            if (!container) { console.error('[Planner] Container missing', containerId); return; }
+            container.innerHTML = '';
+
+            if (!stations.length) { container.textContent = 'No stations to render'; return; }
+
+            // Prepare SVG chart (responsive to container width)
+            const availW = Math.max(320, Math.floor((container.getBoundingClientRect().width || container.clientWidth || 360) - 8));
+            const width = availW; // fit column
+            const height = Math.max(200, Math.round(width * 0.33));
+            const padding = 32;
+            const chartW = width - padding*2;
+            const chartH = height - padding*2;
+
+            // Common length across stations
+            // Extend each station's predictions with baseline currentRatio at hour 0 if available
+            const extended = stations.map(s => {
+                const base = (s.currentRatio != null) ? [{hour:0, ratio: s.currentRatio, bikes: (s.total? Math.round(s.currentRatio * s.total): null)}] : [];
+                return base.concat(s.predictions||[]);
+            });
+            const lengths = extended.map(arr => arr.length).filter(n => n>0);
+            const minLen = lengths.length ? Math.min.apply(null, lengths) : 0;
+            if (!minLen) { const p = document.createElement('div'); p.textContent = 'No predictions available.'; container.appendChild(p); return; }
+
+            // Use ratios (0..1) for comparability across stations
+            function ratioVal(p, total) {
+                if (p && p.ratio != null) return Math.max(0, Math.min(1, p.ratio));
+                if (total > 0 && p && p.bikes != null) return Math.max(0, Math.min(1, p.bikes / total));
+                return 0;
+            }
+            function yScaleR(v) { return (height - padding) - (v * chartH); }
+
+            const series = extended.map((arr, idx) => {
+                const s = stations[idx];
+                const slice = arr.slice(0, minLen);
+                const vals = slice.map(p => ratioVal(p, s.total||0));
+                const pts = vals.map((v, i) => {
+                    const x = padding + (i / (minLen - 1)) * chartW;
+                    const y = yScaleR(v);
+                    return `${x},${y}`;
+                }).join(' ');
+                return { pts };
+            });
+
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+            svg.style.width = '100%';
+            svg.style.height = 'auto';
+
+            const rect = document.createElementNS(svg.namespaceURI, 'rect');
+            rect.setAttribute('x', padding); rect.setAttribute('y', padding);
+            rect.setAttribute('width', chartW); rect.setAttribute('height', chartH);
+            rect.setAttribute('fill', '#fff'); rect.setAttribute('stroke', '#eee');
+            svg.appendChild(rect);
+
+            const lineTop = document.createElementNS(svg.namespaceURI, 'line');
+            lineTop.setAttribute('x1', padding); lineTop.setAttribute('y1', yScaleR(1));
+            lineTop.setAttribute('x2', width - padding); lineTop.setAttribute('y2', yScaleR(1));
+            lineTop.setAttribute('stroke', '#bbb'); lineTop.setAttribute('stroke-dasharray', '4 3');
+            svg.appendChild(lineTop);
+            const lineHalf = document.createElementNS(svg.namespaceURI, 'line');
+            lineHalf.setAttribute('x1', padding); lineHalf.setAttribute('y1', yScaleR(0.5));
+            lineHalf.setAttribute('x2', width - padding); lineHalf.setAttribute('y2', yScaleR(0.5));
+            lineHalf.setAttribute('stroke', '#ddd'); lineHalf.setAttribute('stroke-dasharray', '4 3');
+            svg.appendChild(lineHalf);
+            const topLabel = document.createElementNS(svg.namespaceURI, 'text');
+            topLabel.setAttribute('x', width - padding); topLabel.setAttribute('y', yScaleR(1) - 6);
+            topLabel.setAttribute('text-anchor', 'end'); topLabel.setAttribute('font-size', '11'); topLabel.setAttribute('fill', '#555');
+            topLabel.textContent = '100%';
+            svg.appendChild(topLabel);
+            const halfLabel = document.createElementNS(svg.namespaceURI, 'text');
+            halfLabel.setAttribute('x', width - padding); halfLabel.setAttribute('y', yScaleR(0.5) - 6);
+            halfLabel.setAttribute('text-anchor', 'end'); halfLabel.setAttribute('font-size', '11'); halfLabel.setAttribute('fill', '#555');
+            halfLabel.textContent = '50%';
+            svg.appendChild(halfLabel);
+
+            const xAxis = document.createElementNS(svg.namespaceURI, 'line');
+            xAxis.setAttribute('x1', padding); xAxis.setAttribute('y1', height - padding);
+            xAxis.setAttribute('x2', width - padding); xAxis.setAttribute('y2', height - padding);
+            xAxis.setAttribute('stroke', '#ccc');
+            svg.appendChild(xAxis);
+
+            // X-axis ticks and labels (use predicted hour if available)
+            if (minLen > 1) {
+                const tickCount = Math.min(6, minLen - 1);
+                const step = Math.max(1, Math.round((minLen - 1) / tickCount));
+                // Choose source station for hour labels including baseline (hour 0)
+                const sourceIdx = extended.findIndex(arr => arr.length >= minLen);
+                const sourceArr = sourceIdx >= 0 ? extended[sourceIdx] : extended[0];
+                for (let i = 0; i < minLen; i += step) {
+                    const x = padding + (i / (minLen - 1)) * chartW;
+                    const tick = document.createElementNS(svg.namespaceURI, 'line');
+                    tick.setAttribute('x1', x); tick.setAttribute('y1', height - padding);
+                    tick.setAttribute('x2', x); tick.setAttribute('y2', height - padding + 6);
+                    tick.setAttribute('stroke', '#aaa');
+                    svg.appendChild(tick);
+                    const label = document.createElementNS(svg.namespaceURI, 'text');
+                    label.setAttribute('x', x);
+                    label.setAttribute('y', height - padding + 18);
+                    label.setAttribute('text-anchor', 'middle');
+                    label.setAttribute('font-size', '10');
+                    label.setAttribute('fill', '#666');
+                    let hour = sourceArr && sourceArr[i] && sourceArr[i].hour;
+                    if (hour == null) hour = i; // fallback
+                    label.textContent = `+${hour}h`;
+                    svg.appendChild(label);
+                }
+            }
+
+            series.forEach((s, idx) => {
+                const path = document.createElementNS(svg.namespaceURI, 'path');
+                path.setAttribute('d', `M ${s.pts.split(' ').join(' L ')}`);
+                path.setAttribute('fill', 'none');
+                const c = (colors && colors[idx]) ? colors[idx] : (role==='start'?'#2E86AB':'#A23B72');
+                path.setAttribute('stroke', c);
+                path.setAttribute('stroke-width', '2');
+                path.setAttribute('opacity', '0.95');
+                svg.appendChild(path);
+            });
+
+            container.appendChild(svg);
+        }
+
+        // Re-render charts on window resize to keep them within their columns
+        window.addEventListener('resize', function() {
+            if (!__routePayload) return;
+            const startSel = (__routePayload.start?.stations || []).slice(0,3);
+            const endSel = (__routePayload.end?.stations || []).slice(0,3);
+            const startColors = getPalette('start', startSel.length);
+            const endColors = getPalette('end', endSel.length);
+            renderStationsList('start-stations', startSel, startColors);
+            renderStationsList('end-stations', endSel, endColors);
+            renderCombinedInto('start-predictions', startSel, 'start', startColors);
+            renderCombinedInto('end-predictions', endSel, 'end', endColors);
+        });
+
+        if (payload && payload.start && payload.end) {
+            renderFromPayload(payload);
+        } else {
+            console.warn('[Planner] Falling back to URL-only rendering (no predictions)');
+            // Fallback: render from URL-only data (no charts due to missing predictions)
+            const startStationsHTML = startStations.map((item) => {
+                const station = item.station;
+                const distance = item.distance;
+                return `
+                    <div class="station-item">
+                        <div class="station-number">Station ${station.number}</div>
+                        <div class="station-address">${station.address}</div>
+                        <div class="station-distance">📍 ${(distance * 1000).toFixed(0)} meters away</div>
+                        <div class="station-coords">Coordinates: ${station.lat.toFixed(6)}, ${station.lon.toFixed(6)}</div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('start-stations').innerHTML = startStationsHTML;
+            const endStationsHTML = endStations.map((item) => {
+                const station = item.station;
+                const distance = item.distance;
+                return `
+                    <div class="station-item">
+                        <div class="station-number">Station ${station.number}</div>
+                        <div class="station-address">${station.address}</div>
+                        <div class="station-distance">📍 ${(distance * 1000).toFixed(0)} meters away</div>
+                        <div class="station-coords">Coordinates: ${station.lat.toFixed(6)}, ${station.lon.toFixed(6)}</div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('end-stations').innerHTML = endStationsHTML;
+        }
     </script>
 </body>
 </html>
